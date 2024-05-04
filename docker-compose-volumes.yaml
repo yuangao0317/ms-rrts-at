@@ -1,0 +1,64 @@
+# docker compose -f docker-compose-volumes.yaml up -d redis mongodb mysql postgres rabbitmq
+version: "3.9"
+services:
+  redis:
+    container_name: redis_container
+    image: redis:alpine
+    restart: always
+    ports:
+      - "6379:6379"
+    command: redis-server --loglevel warning
+    volumes:
+      - ./docker-volumes/redis-cache:/data
+
+  mongodb:
+    container_name: mongodb_container
+    image: mongo:latest
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./docker-volumes/mongodb-data:/data/db
+
+  mysql:
+    container_name: mysql_container
+    image: mysql:latest
+    # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
+    # (this is just an example, not intended to be a production configuration)
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      - MYSQL_USER=ms_admin
+      - MYSQL_DATABASE=ms_auth
+      - MYSQL_ROOT_PASSWORD=ms_admin # Password is not secured for production
+      - MYSQL_PASSWORD=ms_admin
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./docker-volumes/mysql-data:/var/lib/mysql
+
+  postgres:
+    container_name: postgres_container
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=ms_admin
+      - POSTGRES_PASSWORD=ms_admin
+      - POSTGRES_DB=ms_reviews
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./docker-volumes/postgres-data:/var/lib/postgresql
+
+  rabbitmq:
+    container_name: rabbitmq_container
+    image: rabbitmq:3.13-rc-management-alpine
+    restart: always
+    environment:
+      - RABBITMQ_DEFAULT_USER=jobber
+      - RABBITMQ_DEFAULT_PASS=jobberpass
+    ports:
+      # AMQP protocol port
+      - "5672:5672"
+      # Management UI
+      - "15672:15672"

@@ -1,0 +1,60 @@
+# docker compose -f docker-compose-monitoring.yaml up -d elasticsearch kibana
+version: "3.9"
+networks:
+  elastic:
+    name: elastic
+services:
+  # https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
+  elasticsearch:
+    container_name: elasticsearch_container
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.13.2
+    restart: always
+    environment:
+      ES_JAVA_OPTS: -Xmx1g -Xms1g
+      bootstrap.memory_lock: "true"
+      discovery.type: single-node
+      network.host: 0.0.0.0
+      transport.host: 127.0.0.1
+      http.host: 0.0.0.0
+      xpack.security.enabled: "true"
+      xpack.security.authc.api_key.enabled: "true"
+      xpack.monitoring.collection.enabled: "true"
+      xpack.security.enrollment.enabled: "true"
+      xpack.security.authc.token.enabled: "true"
+      #xpack.security.http.ssl.enabled: "true"
+      ELASTIC_PASSWORD: ms_admin
+    ports:
+      - 9300:9300
+      - 9200:9200
+    volumes:
+      - ./docker-volumes/elasticsearch-data:/usr/share/elasticsearch/data
+    networks:
+      - elastic
+
+  kibana:
+    container_name: kibana_container
+    image: docker.elastic.co/kibana/kibana:8.13.2
+    restart: always
+    environment:
+      - ELASTICSEARCH_HOSTS=["http://elasticsearch_container:9200"]
+      # [ERROR][elasticsearch-service] Unable to retrieve version information from Elasticsearch nodes. security_exception
+      # https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-change-password.html
+      # Update kibana user info in elasticsearch_container: curl -s -X POST -u elastic:admin1234 -H "Content-Type: application/json" http://localhost:9200/_security/user/<kibana_username>/_password -d "{\"password\":\"<kibana_password>\"}"
+      # Example: curl -s -X POST -H "Content-Type: application/json" "http://localhost:9200/_security/user/kibana_system/_password?pretty" -d '{ "password": "ms_admin" }' -u elastic:ms_admin
+      # WARNING: If you delete its volume, you need to recreate password and service token below
+      - ELASTICSEARCH_USERNAME=kibana_system
+      - ELASTICSEARCH_PASSWORD=ms_admin
+      # In elasticsearch, command: bin/elasticsearch-service-tokens create elastic/kibana [name]
+      # WARNING: If you delete volume folder, you have to recreate the token
+      - ELASTICSEARCH_SERVICEACCOUNT_TOKEN=AAEAAWVsYXN0aWMva2liYW5hL21zLXJydHMtYXQ6d2V6SGo3RzFSZldsaHA4alVaWmNPdw
+      - XPACK_FLEET_AGENTS_ELASTICSEARCH_HOSTS=["http://elasticsearch_container:9200"]
+    ports:
+      - 5601:5601
+    networks:
+      - elastic
+    volumes:
+      - ./kibana.yml/:/usr/share/kibana/config/kibana.yml:ro
+    depends_on:
+      - elasticsearch
+
+
