@@ -3,6 +3,7 @@
 
 
 **/.npmrc
+**/.env
 **/.env.dev
 
 ### Node ###
@@ -90,9 +91,6 @@ web_modules/
 .env.production.local
 .env.local
 .env.dev
-
-**/.env
-**/.env.dev
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
