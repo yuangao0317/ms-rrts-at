@@ -28,7 +28,6 @@
   },
   "dependencies": {
     "@yuangao0317/ms-rrts-at-shared-common": "^0.0.1",
-    "@YuanGao0317/ms-rrts-at-shared-common": "npm:@yuangao0317/ms-rrts-at-shared-common@^0.0.1",
     "amqplib": "^0.10.4",
     "ejs": "^3.1.10",
     "email-templates": "^11.1.1",
