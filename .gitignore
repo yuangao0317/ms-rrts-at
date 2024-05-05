@@ -3,6 +3,7 @@
 
 
 **/.npmrc
+**/.env.dev
 
 ### Node ###
 # Logs
