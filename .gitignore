@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/node,react
 # Edit at https://www.toptal.com/developers/gitignore?templates=node,react
 
+
+**/.npmrc
+
 ### Node ###
 # Logs
 logs
@@ -89,8 +92,6 @@ web_modules/
 
 **/.env
 **/.env.dev
-
-.npmrc
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
