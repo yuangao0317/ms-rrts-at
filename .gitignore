@@ -46,6 +46,7 @@ build/Release
 node_modules/
 jspm_packages/
 
+**/node_modules/
 docker-volumes/
 
 # Snowpack dependency directory (https://snowpack.dev/)
@@ -85,6 +86,9 @@ web_modules/
 .env.production.local
 .env.local
 .env.dev
+
+**/.env
+**/.env.dev
 
 .npmrc
 
