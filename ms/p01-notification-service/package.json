@@ -1,0 +1,29 @@
+{
+  "name": "ms-rrts-at-notification-service",
+  "version": "1.0.0",
+  "description": "ms-rrts-at Microservices - Notification Service",
+  "main": "app.ts",
+  "scripts": {
+    "dev": "nodemon -r tsconfig-paths/register src/app.ts | pino-pretty -c",
+    "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json"
+  },
+  "keywords": [],
+  "author": "Yuan Gao",
+  "license": "ISC",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^7.8.0",
+    "@typescript-eslint/parser": "^7.8.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "prettier": "^3.2.5",
+    "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.8",
+    "tsconfig-paths": "^4.2.0"
+  },
+  "dependencies": {
+    "pino-pretty": "^11.0.0",
+    "typescript": "^5.4.5",
+    "typescript-transform-paths": "^3.4.7"
+  }
+}
