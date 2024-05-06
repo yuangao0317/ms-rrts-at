@@ -4,13 +4,16 @@ import http from 'http';
 import { Logger } from 'winston';
 import { config } from '@notifications/config';
 import { winstonLogger } from '@yuangao0317/ms-rrts-at-shared-common';
+import { healthMonitoringRoutes } from '@notifications/routes';
 import { Application } from 'express';
+
 
 const SERVER_PORT = 4001;
 const log: Logger = winstonLogger(`${config.ELASTIC_SEARCH_URL}`, 'notificationServer', 'debug');
 
 export function start(app: Application): void {
     startHttpServer(app);
+    app.use('', healthMonitoringRoutes());
 }
 
 function startHttpServer(app: Application): void {
