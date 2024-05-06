@@ -18,6 +18,7 @@ export async function checkConnection(): Promise<void> {
   while (!isConnected) {
     try {
       const health: ClusterHealthResponse = await elasticSearchClient.cluster.health({});
+      //  If a replica shard is unassigned (i.e., not allocated to any node), the cluster health status will be yellow.
       log.info(`NotificationService Elasticsearch health status - ${health.status.toUpperCase()}`);
       isConnected = true;
     } catch (error) {
