@@ -27,6 +27,7 @@
     "tsconfig-paths": "^4.2.0"
   },
   "dependencies": {
+    "@elastic/elasticsearch": "^8.13.1",
     "@yuangao0317/ms-rrts-at-shared-common": "~0.0.2",
     "amqplib": "^0.10.4",
     "dotenv": "^16.4.5",

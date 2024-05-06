@@ -6,6 +6,7 @@ import { config } from '@notifications/config';
 import { winstonLogger } from '@yuangao0317/ms-rrts-at-shared-common';
 import { healthMonitoringRoutes } from '@notifications/routes';
 import { Application } from 'express';
+import { checkConnection } from './elasticsearch';
 
 
 const SERVER_PORT = 4001;
@@ -14,6 +15,8 @@ const log: Logger = winstonLogger(`${config.ELASTIC_SEARCH_URL}`, 'notificationS
 export function start(app: Application): void {
     startHttpServer(app);
     app.use('', healthMonitoringRoutes());
+    startElasticSearch();
+    
 }
 
 function startHttpServer(app: Application): void {
@@ -26,6 +29,10 @@ function startHttpServer(app: Application): void {
   } catch (error) {
     log.log('error', 'NotificationService startServer() method:', error);
   }
+}
+
+function startElasticSearch(): void {
+  checkConnection();
 }
 
 
