@@ -5,6 +5,8 @@ networks:
     name: elastic
 services:
   # https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
+  # ERROR: unexpected error while indexing monitoring document, primary shard is not active, failed to flush export bulks
+  # CAUSED BY: Low disk space
   elasticsearch:
     container_name: elasticsearch_container
     image: docker.elastic.co/elasticsearch/elasticsearch:8.13.2
