@@ -21,10 +21,10 @@ if (process.env.ENABLE_APM === '1') {
 }
 
 class Config {
-  public NODE_ENV: string | undefined;
-  public CLIENT_URL: string | undefined;
-  public RABBITMQ_ENDPOINT: string | undefined;
-  public ELASTIC_SEARCH_URL: string | undefined;
+  public readonly NODE_ENV: string | undefined;
+  public readonly CLIENT_URL: string | undefined;
+  public readonly RABBITMQ_ENDPOINT: string | undefined;
+  public readonly ELASTIC_SEARCH_URL: string | undefined;
 
   constructor() {
     this.NODE_ENV = process.env.NODE_ENV || '';

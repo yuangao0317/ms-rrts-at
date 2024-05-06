@@ -21,13 +21,13 @@ if (process.env.ENABLE_APM === '1') {
 }
 
 class Config {
-  public NODE_ENV: string | undefined;
-  public GATEWAY_JWT_TOKEN: string | undefined;
-  public JWT_TOKEN: string | undefined;
-  public CLIENT_URL: string | undefined;
-  public ELASTIC_SEARCH_URL: string | undefined;
-  public REDIS_HOST: string | undefined;
-  public AUTH_BASE_URL: string | undefined;
+  public readonly NODE_ENV: string | undefined;
+  public readonly GATEWAY_JWT_TOKEN: string | undefined;
+  public readonly JWT_TOKEN: string | undefined;
+  public readonly CLIENT_URL: string | undefined;
+  public readonly ELASTIC_SEARCH_URL: string | undefined;
+  public readonly REDIS_HOST: string | undefined;
+  public readonly AUTH_BASE_URL: string | undefined;
 
   constructor() {
     this.NODE_ENV = process.env.NODE_ENV || '';
