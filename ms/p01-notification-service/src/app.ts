@@ -9,7 +9,7 @@ const log: Logger = winstonLogger(`${config.ELASTIC_SEARCH_URL}`, 'notificationA
 function initialize(): void {
   const app: Express = express();
   start(app);
-  log.info('Notification Service Initialized');
+  log.info('Notification Service is initialized');
 }
 
 initialize();

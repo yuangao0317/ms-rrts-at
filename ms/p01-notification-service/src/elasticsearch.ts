@@ -18,7 +18,7 @@ export async function checkConnection(): Promise<void> {
   while (!isConnected) {
     try {
       const health: ClusterHealthResponse = await elasticSearchClient.cluster.health({});
-      log.info(`NotificationService Elasticsearch health status - ${health.status}`);
+      log.info(`NotificationService Elasticsearch health status - ${health.status.toUpperCase()}`);
       isConnected = true;
     } catch (error) {
       log.error('Connection to Elasticsearch failed. Retrying...');
