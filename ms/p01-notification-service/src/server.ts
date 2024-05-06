@@ -1,12 +1,12 @@
 import 'express-async-errors';
 import http from 'http';
 
+import { Application } from 'express';
 import { Logger } from 'winston';
 import { config } from '@notifications/config';
 import { winstonLogger } from '@yuangao0317/ms-rrts-at-shared-common';
 import { healthMonitoringRoutes } from '@notifications/routes';
-import { Application } from 'express';
-import { checkConnection } from './elasticsearch';
+import { checkConnection } from '@notifications/elasticsearch';
 
 
 const SERVER_PORT = 4001;
@@ -16,7 +16,7 @@ export function start(app: Application): void {
     startHttpServer(app);
     app.use('', healthMonitoringRoutes());
     startElasticSearch();
-    
+
 }
 
 function startHttpServer(app: Application): void {
