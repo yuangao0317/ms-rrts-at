@@ -11,13 +11,10 @@ class Elasticsearch {
 
   constructor() {
     this.elasticsearchClient = new Client({
-        node: `${config.ELASTIC_SEARCH_URL}`
+      node: `${config.ELASTIC_SEARCH_URL}`
     });
   }
 
-  /**
-   * async name
-   */
   public async checkConnection(): Promise<void> {
     let isConnected = false;
     while (!isConnected) {

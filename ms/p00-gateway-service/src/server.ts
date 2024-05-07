@@ -85,7 +85,7 @@ export class GatewayServer {
   private async startServer(app: Application): Promise<void> {
     try {
       const httpServer: http.Server = new http.Server(app);
-      
+
       this.startHttpServer(httpServer);
     } catch (error) {
       log.log('error', 'GatewayService startServer() error method:', error);
