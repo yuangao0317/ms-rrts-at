@@ -11,9 +11,10 @@ import compression from 'compression';
 import { StatusCodes } from 'http-status-codes';
 import { CustomError, IErrorResponse } from '@gateway/interfaces';
 import { config } from '@gateway/config';
+import { appRoutes } from '@gateway/routes';
 
 const SERVER_PORT = 4000;
-const log: Logger = winstonLogger(`${config.ELASTIC_SEARCH_URL}`, 'notificationServer', 'debug');
+const log: Logger = winstonLogger(`${config.ELASTIC_SEARCH_URL}`, 'gatewayServer', 'debug');
 
 export class GatewayServer {
   private app: Application;
@@ -25,6 +26,8 @@ export class GatewayServer {
   public start(): void {
     this.setSecurityMiddleware(this.app);
     this.setStandardMiddleware(this.app);
+    // ensure that middleware that modifies the response headers is placed before middleware that sends the response.
+    this.routesMiddleware(this.app);
     this.setErrorHandlerMiddleware(this.app);
 
     this.startServer(this.app);
@@ -61,6 +64,10 @@ export class GatewayServer {
     app.use(compression());
     app.use(json({ limit: '200mb' }));
     app.use(urlencoded({ extended: true, limit: '200mb' })); // when we send data through the body with a Post request, we can get it via request.body
+  }
+
+  private routesMiddleware(app: Application): void {
+    appRoutes(app);
   }
 
   private setErrorHandlerMiddleware(app: Application): void {
