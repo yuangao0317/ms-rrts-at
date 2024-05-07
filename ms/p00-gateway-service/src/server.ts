@@ -1,7 +1,7 @@
 import http from 'http';
 
 import { Logger } from 'winston';
-import { winstonLogger } from '@yuangao0317/ms-rrts-at-shared-common';
+import { winstonLogger, CustomError, IErrorResponse } from '@yuangao0317/ms-rrts-at-shared-common';
 import { Application, NextFunction, Request, Response, json, urlencoded } from 'express';
 import cookieSession from 'cookie-session';
 import hpp from 'hpp';
@@ -9,7 +9,6 @@ import helmet from 'helmet';
 import cors from 'cors';
 import compression from 'compression';
 import { StatusCodes } from 'http-status-codes';
-import { CustomError, IErrorResponse } from '@gateway/interfaces';
 import { config } from '@gateway/config';
 import { appRoutes } from '@gateway/routes';
 
@@ -54,7 +53,7 @@ export class GatewayServer {
     app.use(
       cors({
         origin: config.CLIENT_URL,
-        credentials: true, // attach jwt token to all requets coming from Client
+        credentials: true, // attach session cookies with JWT to all requets coming from Client
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
       })
     );

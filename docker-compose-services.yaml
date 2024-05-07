@@ -1,0 +1,47 @@
+# docker compose -f docker-compose-monitoring.yaml -f docker-compose-services.yaml up -d gateway notifications
+version: "3.9"
+services:
+  gateway:
+    container_name: gateway_container
+    build:
+      context: ./ms/p00-gateway-service
+      dockerfile: Dockerfile.dev
+    restart: always
+    ports:
+      - 4000:4000
+    env_file: ./ms/p00-gateway-service/.env
+    environment: # overwrite env_file
+      - NODE_ENV=development
+      - GATEWAY_JWT_TOKEN=5b08c2cec49f055a190e44fe4ec97f39
+      - JWT_TOKEN=e94ed1b5caa9b7992ce39cabc33b9c06
+      - SECRET_KEY_ONE=11030cd6369025901101cdac3ffcadd0
+      - SECRET_KEY_TWO=31489e674c786744394d6b4dd0427ceb
+      - CLIENT_URL=http://localhost:3000
+      - ELASTIC_SEARCH_URL=http://elastic:ms_admin@localhost:9200
+      - REDIS_HOST=redis://localhost:6379
+      - AUTH_BASE_URL=http://localhost:4002
+      - ENABLE_APM=0
+      - ELASTIC_APM_SERVER_URL=http://localhost:8200
+      - ELASTIC_APM_SECRET_TOKEN=
+    depends_on:
+      - elasticsearch
+
+  notifications:
+    container_name: notification_container
+    build:
+      context: ./ms/p01-notification-service
+      dockerfile: Dockerfile.dev
+    restart: always
+    ports:
+      - 4001:4001
+    env_file: ./ms/p01-notification-service/.env
+    environment:
+      - NODE_ENV=development
+      - CLIENT_URL=http://localhost:3000
+      - RABBITMQ_ENDPOINT=amqp://ms_admin:ms_admin@localhost:5672
+      - ELASTIC_SEARCH_URL=http://elastic:ms_admin@localhost:9200
+      - ENABLE_APM=0
+      - ELASTIC_APM_SERVER_URL=http://localhost:8200
+      - ELASTIC_APM_SECRET_TOKEN=
+    depends_on:
+      - elasticsearch
