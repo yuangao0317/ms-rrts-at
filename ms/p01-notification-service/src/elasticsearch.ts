@@ -22,7 +22,7 @@ export async function checkConnection(): Promise<void> {
       log.info(`NotificationService Elasticsearch health status - ${health.status.toUpperCase()}`);
       isConnected = true;
     } catch (error) {
-      log.error('Connection to Elasticsearch failed. Retrying...');
+      log.error('NotificationService - Connection to Elasticsearch failed. Retrying...');
       log.log('error', 'NotificationService checkConnection() method:', error);
     }
   }

@@ -40,9 +40,9 @@ export class GatewayServer {
     app.use(
       cookieSession({
         name: 'session',
-        keys: [],
+        keys: [`${config.SECRET_KEY_ONE}`, `${config.SECRET_KEY_TWO}`],
         maxAge: 24 * 7 * 3600000,
-        secure: false // http or https
+        secure: config.NODE_ENV !== 'development'
         // sameSite: 'none'
       })
     );
@@ -50,7 +50,7 @@ export class GatewayServer {
     app.use(helmet());
     app.use(
       cors({
-        origin: '',
+        origin: config.CLIENT_URL,
         credentials: true, // attach jwt token to all requets coming from Client
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
       })
