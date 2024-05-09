@@ -6,7 +6,8 @@
   "scripts": {
     "npmrc-config": "npx npmrc-replace-env",
     "dev": "cross-env NODE_ENV=development nodemon -r tsconfig-paths/register src/app.ts | pino-pretty -c",
-    "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json"
+    "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
+    "start": "pm2 start ./build/src/app.js -i 5 --attach --watch | pino-pretty -c"
   },
   "keywords": [],
   "author": "Yuan Gao",

@@ -7,7 +7,7 @@ import { ClusterHealthResponse } from '@elastic/elasticsearch/lib/api/types';
 const log: Logger = winstonLogger(`${config.ELASTIC_SEARCH_URL}`, 'gatewayElasticSearchServer', 'debug');
 
 class Elasticsearch {
-  private readonly elasticsearchClient: Client;
+  private elasticsearchClient: Client;
 
   constructor() {
     this.elasticsearchClient = new Client({
@@ -17,15 +17,15 @@ class Elasticsearch {
 
   public async checkConnection(): Promise<void> {
     let isConnected = false;
-    while (!isConnected) {
+    while(!isConnected) {
+      log.info('GatewayService Connecting to ElasticSearch');
       try {
         const health: ClusterHealthResponse = await this.elasticsearchClient.cluster.health({});
-        //  If a replica shard is unassigned (i.e., not allocated to any node), the cluster health status will be yellow.
-        log.info(`GatewayService Elasticsearch health status - ${health.status.toUpperCase()}`);
+        log.info(`GatewayService ElasticSearch health status - ${health.status}`);
         isConnected = true;
       } catch (error) {
-        log.error('GatewayService - Connection to Elasticsearch failed. Retrying...');
-        log.log('error', 'GatewayService checkConnection() method:', error);
+        log.error('Connection to ElasticSearch failed, Retrying...');
+        log.log('error', 'GatewayService checkConnection() method error:', error);
       }
     }
   }

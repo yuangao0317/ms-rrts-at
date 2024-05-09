@@ -30,7 +30,6 @@ export class GatewayServer {
     this.routesMiddleware(this.app);
     this.startElasticSearch();
     this.setErrorHandlerMiddleware(this.app);
-
     this.startServer(this.app);
   }
 
