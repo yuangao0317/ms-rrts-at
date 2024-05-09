@@ -11,6 +11,7 @@ import compression from 'compression';
 import { StatusCodes } from 'http-status-codes';
 import { config } from '@gateway/config';
 import { appRoutes } from '@gateway/routes';
+import { elasticsearch } from '@gateway/elasticsearch';
 
 const SERVER_PORT = 4000;
 const log: Logger = winstonLogger(`${config.ELASTIC_SEARCH_URL}`, 'gatewayServer', 'debug');
@@ -29,6 +30,7 @@ export class GatewayServer {
     this.routesMiddleware(this.app);
     this.setErrorHandlerMiddleware(this.app);
 
+    this.startElasticSearch();
     this.startServer(this.app);
   }
 
@@ -57,6 +59,13 @@ export class GatewayServer {
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
       })
     );
+
+    // !!! should attach JWT to header, and pass to internal services like authService
+    // app.use((req: Request, _res: Response, next: NextFunction) => {
+    //   if (req.session?.jwt) {
+    //     authService <- headers['Authorization'] = `Bearer ${req.session?.jwt}`;
+    //   }
+    // });
   }
 
   private setStandardMiddleware(app: Application): void {
@@ -86,6 +95,10 @@ export class GatewayServer {
       }
       next();
     });
+  }
+
+  private startElasticSearch(): void {
+    elasticsearch.checkConnection();
   }
 
   private async startServer(app: Application): Promise<void> {
