@@ -1,8 +1,9 @@
 # docker compose -f docker-compose-monitoring.yaml up -d elasticsearch kibana
 version: "3.9"
 networks:
-  elastic:
-    name: elastic
+  elastic_net:
+
+
 services:
   # https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
   # ERROR: unexpected error while indexing monitoring document, primary shard is not active, failed to flush export bulks
@@ -25,13 +26,13 @@ services:
       xpack.security.authc.token.enabled: "true"
       #xpack.security.http.ssl.enabled: "true"
       ELASTIC_PASSWORD: ms_admin
+    volumes:
+      - ./docker-volumes/elasticsearch-data:/usr/share/elasticsearch/data
     ports:
       - 9300:9300
       - 9200:9200
-    volumes:
-      - ./docker-volumes/elasticsearch-data:/usr/share/elasticsearch/data
     networks:
-      - elastic
+      - elastic_net
 
   kibana:
     container_name: kibana_container
@@ -50,37 +51,11 @@ services:
       # WARNING: If you delete volume folder, you have to recreate the token
       - ELASTICSEARCH_SERVICEACCOUNT_TOKEN=AAEAAWVsYXN0aWMva2liYW5hL21zLXJydHMtYXQ6d2V6SGo3RzFSZldsaHA4alVaWmNPdw
       - XPACK_FLEET_AGENTS_ELASTICSEARCH_HOSTS=["http://elasticsearch_container:9200"]
+    volumes:
+      - ./kibana.yml/:/usr/share/kibana/config/kibana.yml:ro
     ports:
       - 5601:5601
     networks:
-      - elastic
-    volumes:
-      - ./kibana.yml/:/usr/share/kibana/config/kibana.yml:ro
-    depends_on:
-      - elasticsearch
-
-  gateway:
-    container_name: gateway_container
-    build:
-      context: ./ms/p00-gateway-service
-      dockerfile: Dockerfile.dev
-    restart: always
-    ports:
-      - 4000:4000
-    env_file: ./ms/p00-gateway-service/.env
-    environment:
-      # overwrite env_file
-      - NODE_ENV=development
-      - GATEWAY_JWT_TOKEN=5b08c2cec49f055a190e44fe4ec97f39
-      - JWT_TOKEN=e94ed1b5caa9b7992ce39cabc33b9c06
-      - SECRET_KEY_ONE=11030cd6369025901101cdac3ffcadd0
-      - SECRET_KEY_TWO=31489e674c786744394d6b4dd0427ceb
-      - CLIENT_URL=http://localhost:3000
-      - ELASTIC_SEARCH_URL=http://elastic:ms_admin@elasticsearch_container:9200
-      - REDIS_HOST=redis://localhost:6379
-      - AUTH_BASE_URL=http://localhost:4002
-      - ENABLE_APM=0
-      - ELASTIC_APM_SERVER_URL=http://localhost:8200
-      - ELASTIC_APM_SECRET_TOKEN=
+      - elastic_net
     depends_on:
       - elasticsearch
