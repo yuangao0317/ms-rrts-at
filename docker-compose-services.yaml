@@ -50,12 +50,12 @@ services:
   auth:
     container_name: auth_container
     build:
-      context: ../ms/3-auth-service
+      context: ./ms/p02-auth-service
       dockerfile: Dockerfile.dev
     restart: always
     ports:
       - 4002:4002
-    env_file: ../ms/3-auth-service/.env
+    env_file: ./ms/p02-auth-service/.env
     environment:
       - NODE_ENV=development
       - GATEWAY_JWT_TOKEN=5b08c2cec49f055a190e44fe4ec97f39

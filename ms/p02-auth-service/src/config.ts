@@ -9,7 +9,7 @@ if (process.env.NODE_ENV === 'development') {
 if (process.env.ENABLE_APM === '1') {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   require('elastic-apm-node').start({
-    serviceName: 'jobber-auth',
+    serviceName: 'ms-rrts-at-auth-service',
     serverUrl: process.env.ELASTIC_APM_SERVER_URL,
     secretToken: process.env.ELASTIC_APM_SECRET_TOKEN,
     environment: process.env.NODE_ENV,

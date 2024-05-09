@@ -28,9 +28,9 @@ export class GatewayServer {
     this.setStandardMiddleware(this.app);
     // ensure that middleware that modifies the response headers is placed before middleware that sends the response.
     this.routesMiddleware(this.app);
+    this.startElasticSearch();
     this.setErrorHandlerMiddleware(this.app);
 
-    this.startElasticSearch();
     this.startServer(this.app);
   }
 
