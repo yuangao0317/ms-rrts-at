@@ -22,6 +22,7 @@ if (process.env.ENABLE_APM === '1') {
 
 class Config {
   public readonly NODE_ENV: string | undefined;
+  public readonly CLIENT_URL: string | undefined;
   public readonly RABBITMQ_ENDPOINT: string | undefined;
   public readonly MYSQL_DB: string | undefined;
   public readonly JWT_TOKEN: string | undefined;
@@ -34,6 +35,7 @@ class Config {
 
   constructor() {
     this.NODE_ENV = process.env.NODE_ENV || '';
+    this.CLIENT_URL = process.env.CLIENT_URL || '';
     this.JWT_TOKEN = process.env.JWT_TOKEN || '';
     this.GATEWAY_JWT_TOKEN = process.env.GATEWAY_JWT_TOKEN || '';
     this.RABBITMQ_ENDPOINT = process.env.RABBITMQ_ENDPOINT || '';

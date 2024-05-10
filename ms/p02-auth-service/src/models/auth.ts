@@ -1,7 +1,7 @@
 // https://sequelize.org/docs/v6/other-topics/typescript/
 
 import { sequelize } from '@auth/database';
-import { IAuthDocument } from '@auth/interfaces/auth';
+import { IAuthDocument } from '@yuangao0317/ms-rrts-at-shared-common';
 import { compare, hash } from 'bcrypt';
 import { DataTypes, Model, ModelDefined, Optional } from 'sequelize';
 
