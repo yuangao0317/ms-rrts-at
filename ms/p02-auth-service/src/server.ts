@@ -11,17 +11,22 @@ import { verify } from 'jsonwebtoken';
 import compression from 'compression';
 import { checkConnection } from '@auth/elasticsearch';
 import { appRoutes } from '@auth/routes';
+import { createConnection } from '@auth/queues/message-broker';
+import { Channel } from 'amqplib';
 
 const SERVER_PORT = 4002;
 const log: Logger = winstonLogger(`${config.ELASTIC_SEARCH_URL}`, 'authServer', 'debug');
+
+export let authChannel: Channel;
 
 export function start(app: Application): void {
   securityMiddleware(app);
   standardMiddleware(app);
   routesMiddleware(app);
-  authErrorHandler(app);
-
+  startMessageQueue();
   startElasticSearch();
+
+  authErrorHandler(app);
   startServer(app);
 }
 
@@ -54,6 +59,10 @@ function standardMiddleware(app: Application): void {
 
 function routesMiddleware(app: Application): void {
   appRoutes(app);
+}
+
+async function startMessageQueue(): Promise<void> {
+  authChannel = await createConnection() as Channel;
 }
 
 function startElasticSearch(): void {
