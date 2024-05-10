@@ -17,13 +17,14 @@ import { Channel } from 'amqplib';
 const SERVER_PORT = 4002;
 const log: Logger = winstonLogger(`${config.ELASTIC_SEARCH_URL}`, 'authServer', 'debug');
 
+// for publish messages
 export let authChannel: Channel;
 
 export function start(app: Application): void {
   securityMiddleware(app);
   standardMiddleware(app);
   routesMiddleware(app);
-  startMessageQueue();
+  startMessageQueues();
   startElasticSearch();
 
   authErrorHandler(app);
@@ -61,7 +62,7 @@ function routesMiddleware(app: Application): void {
   appRoutes(app);
 }
 
-async function startMessageQueue(): Promise<void> {
+async function startMessageQueues(): Promise<void> {
   authChannel = await createConnection() as Channel;
 }
 
@@ -82,9 +83,9 @@ function authErrorHandler(app: Application): void {
 function startServer(app: Application): void {
   try {
     const httpServer: http.Server = new http.Server(app);
-    log.info(`Authentication server has started with process id ${process.pid}`);
+    log.info(`Authentication Server has started with process id ${process.pid}`);
     httpServer.listen(SERVER_PORT, () => {
-      log.info(`Authentication server running on port ${SERVER_PORT}`);
+      log.info(`Authentication Server running on port ${SERVER_PORT}`);
     });
   } catch (error) {
     log.log('error', 'AuthService startServer() method error:', error);
