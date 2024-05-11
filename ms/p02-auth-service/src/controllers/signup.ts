@@ -19,7 +19,7 @@ import { authChannel } from '@auth/server';
 import { StatusCodes } from 'http-status-codes';
 
 export async function create(req: Request, res: Response): Promise<void> {
-  const errorMsgComingFrom = 'Controller signup create() method error';
+  const errorMsgComingFrom = 'Controller Signup create() method error';
   const { error } = await Promise.resolve(signupSchema.validate(req.body));
   if (error?.details) {
     throw new BadRequestError(error.details[0].message, errorMsgComingFrom);

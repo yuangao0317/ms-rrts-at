@@ -30,6 +30,28 @@ export async function getUserByUsernameOrEmail(username: string, email: string):
   }
 }
 
+export async function getUserByUsername(username: string): Promise<IAuthDocument | undefined> {
+  try {
+    const user: Model = (await UserModel.findOne({
+      where: { username: firstLetterUppercase(username) }
+    })) as Model;
+    return user?.dataValues;
+  } catch (error) {
+    log.error(error);
+  }
+}
+
+export async function getUserByEmail(email: string): Promise<IAuthDocument | undefined> {
+    try {
+      const user: Model = (await UserModel.findOne({
+        where: { email: lowerCase(email) }
+      })) as Model;
+      return user?.dataValues;
+    } catch (error) {
+      log.error(error);
+    }
+  }
+
 export async function updateProfilePicture(authId: number, profilePublicId: string, profilePicture: string): Promise<void> {
   try {
     await UserModel.update(
