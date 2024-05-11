@@ -12,6 +12,7 @@ import { StatusCodes } from 'http-status-codes';
 import { config } from '@gateway/config';
 import { appRoutes } from '@gateway/routes';
 import { elasticsearch } from '@gateway/elasticsearch';
+import { axiosAuthInstance } from '@gateway/services/api/auth.service';
 
 const SERVER_PORT = 4000;
 const log: Logger = winstonLogger(`${config.ELASTIC_SEARCH_URL}`, 'gatewayServer', 'debug');
@@ -59,12 +60,13 @@ export class GatewayServer {
       })
     );
 
-    // !!! should attach JWT to header, and pass to internal services like authService
-    // app.use((req: Request, _res: Response, next: NextFunction) => {
-    //   if (req.session?.jwt) {
-    //     authService <- headers['Authorization'] = `Bearer ${req.session?.jwt}`;
-    //   }
-    // });
+    // attach JWT to header, and pass to internal services like authService
+    app.use((req: Request, _res: Response, next: NextFunction) => {
+      if (req.session?.jwt) {
+        axiosAuthInstance.defaults.headers['Authorization'] = `Bearer ${req.session?.jwt}`;
+      }
+      next();
+    });
   }
 
   private setStandardMiddleware(app: Application): void {
