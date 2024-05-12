@@ -42,15 +42,15 @@ export async function getUserByUsername(username: string): Promise<IAuthDocument
 }
 
 export async function getUserByEmail(email: string): Promise<IAuthDocument | undefined> {
-    try {
-      const user: Model = (await UserModel.findOne({
-        where: { email: lowerCase(email) }
-      })) as Model;
-      return user?.dataValues;
-    } catch (error) {
-      log.error(error);
-    }
+  try {
+    const user: Model = (await UserModel.findOne({
+      where: { email: lowerCase(email) }
+    })) as Model;
+    return user?.dataValues;
+  } catch (error) {
+    log.error(error);
   }
+}
 
 export async function updateProfilePicture(authId: number, profilePublicId: string, profilePicture: string): Promise<void> {
   try {
@@ -59,6 +59,52 @@ export async function updateProfilePicture(authId: number, profilePublicId: stri
         profilePublicId,
         profilePicture
       },
+      { where: { id: authId } }
+    );
+  } catch (error) {
+    log.error(error);
+  }
+}
+
+export async function getAuthUserById(authId: number): Promise<IAuthDocument | undefined> {
+  try {
+    const user: Model = (await UserModel.findOne({
+      where: { id: authId },
+      attributes: {
+        exclude: ['password']
+      }
+    })) as Model;
+    return user?.dataValues;
+  } catch (error) {
+    log.error(error);
+  }
+}
+
+export async function getAuthUserByVerificationToken(token: string): Promise<IAuthDocument | undefined> {
+  try {
+    const user: Model = (await UserModel.findOne({
+      where: { emailVerificationToken: token },
+      attributes: {
+        exclude: ['password']
+      }
+    })) as Model;
+    return user?.dataValues;
+  } catch (error) {
+    log.error(error);
+  }
+}
+
+export async function updateVerifyEmailField(authId: number, emailVerified: number, emailVerificationToken?: string): Promise<void> {
+  try {
+    await UserModel.update(
+      !emailVerificationToken
+        ? {
+            emailVerified
+          }
+        : {
+            emailVerified,
+            emailVerificationToken
+          },
       { where: { id: authId } }
     );
   } catch (error) {
