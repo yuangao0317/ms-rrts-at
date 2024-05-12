@@ -25,12 +25,16 @@ class Config {
   public readonly CLIENT_URL: string | undefined;
   public readonly RABBITMQ_ENDPOINT: string | undefined;
   public readonly ELASTIC_SEARCH_URL: string | undefined;
+  public readonly SENDER_EMAIL: string | undefined;
+  public readonly SENDER_EMAIL_PASSWORD: string | undefined;
 
   constructor() {
     this.NODE_ENV = process.env.NODE_ENV || '';
     this.CLIENT_URL = process.env.CLIENT_URL || '';
     this.RABBITMQ_ENDPOINT = process.env.RABBITMQ_ENDPOINT || '';
     this.ELASTIC_SEARCH_URL = process.env.ELASTIC_SEARCH_URL || '';
+    this.SENDER_EMAIL = process.env.SENDER_EMAIL || '';
+    this.SENDER_EMAIL_PASSWORD = process.env.SENDER_EMAIL_PASSWORD || '';
   }
 }
 

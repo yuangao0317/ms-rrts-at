@@ -41,9 +41,20 @@ async function startMessageQueues(): Promise<void> {
   await consumeAuthEmailMessages(emailChannel);
 
   // test
-  await emailChannel.assertExchange('ms-auth-notification-email-exchange', 'direct');
-  const message = JSON.stringify({ name: 'test', service: 'notification service' });
-  emailChannel.publish('ms-auth-notification-email-exchange', 'auth-email', Buffer.from(message));
+  // await emailChannel.assertExchange('ms-auth-notification-email-exchange', 'direct');
+  // const message = JSON.stringify({ name: 'test', service: 'notification service' });
+  // emailChannel.publish('ms-auth-notification-email-exchange', 'auth-email', Buffer.from(message));
+
+  // test email notification with https://ethereal.email/
+  // const verificationLink = `${config.CLIENT_URL}/confirm_email?v_token=1qaz2wsx`;
+  // const messageDetails: IEmailMessageDetails = {
+  //   receiverEmail:`${config.SENDER_EMAIL}`,
+  //   verifyLink: verificationLink,
+  //   template: 'verifyEmail'
+  // };
+  // await emailChannel.assertExchange('ms-auth-notification-email-exchange', 'direct');
+  // const message = JSON.stringify(messageDetails);
+  // emailChannel.publish('ms-auth-notification-email-exchange', 'auth-email', Buffer.from(message));
 }
 
 function startElasticSearch(): void {
