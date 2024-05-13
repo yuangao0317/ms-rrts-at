@@ -1,9 +1,8 @@
-import { FC, ReactElement } from 'react'
+import { FC, ReactElement } from 'react';
+import Index from 'src/features/index';
 
 const AppPage: FC = (): ReactElement => {
-  return (
-    <div>AppPage</div>
-  )
-}
+  return <div><Index />;</div>;
+};
 
 export default AppPage;

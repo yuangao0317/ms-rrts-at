@@ -1,13 +1,13 @@
 import { FC } from 'react';
 import { RouteObject, useRoutes } from 'react-router-dom';
 
-import AppPage from './features/AppPage';
-import Home from './features/home/home';
+import AppPage from 'src/features/AppPage';
+import Home from 'src/features/home/home';
 
 const AppRouter: FC = () => {
   const routes: RouteObject[] = [
     { path: '/', element: <AppPage /> },
-    { path: '/', element: <Home /> },
+    { path: '/', element: <Home /> }
   ];
 
   return useRoutes(routes);
