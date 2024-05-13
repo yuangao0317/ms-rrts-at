@@ -1,7 +1,8 @@
 import { FC, ReactElement } from 'react'
 
-export const Home: FC = (): ReactElement => {
+const Home: FC = (): ReactElement => {
   return (
     <div>home</div>
   )
 }
+export default Home;
