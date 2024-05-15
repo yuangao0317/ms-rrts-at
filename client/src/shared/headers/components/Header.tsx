@@ -19,7 +19,7 @@ const Header: FC<IHeader> = ({ navClass }): ReactElement => {
                 <Button className="m-auto h-0.5 w-5 rounded transition duration-300" label="label" />
               </div>
             </div>
-            <div className="navmenu mb-16 hidden w-full cursor-pointer flex-wrap items-center justify-end space-y-8 rounded-3xl border border-gray-100 bg-white p-6 shadow-2xl shadow-gray-300/20 dark:border-gray-700 dark:bg-gray-800 dark:shadow-none md:flex-nowrap lg:m-0 lg:flex lg:w-7/12 lg:space-y-0 lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none">
+            <div className="navmenu mb-16 hidden w-full flex-wrap items-center justify-end space-y-8 rounded-3xl border border-gray-100 bg-white p-6 shadow-2xl shadow-gray-300/20 dark:border-gray-700 dark:shadow-none md:flex-nowrap lg:m-0 lg:flex lg:w-7/12 lg:space-y-0 lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none">
 
 
               <div className="border-primary/10 -ml-1 flex w-full flex-col space-y-2 dark:border-gray-700 sm:flex-row md:w-max lg:space-y-0 lg:border-l">
@@ -27,13 +27,13 @@ const Header: FC<IHeader> = ({ navClass }): ReactElement => {
                   className="relative ml-auto flex h-9 items-center justify-center before:absolute
                             before:inset-0 before:rounded-full before:transition before:duration-300
                             hover:before:scale-105 focus:before:bg-sky-600/10 active:duration-75 active:before:scale-95
-                            dark:focus:before:bg-sky-400/10 sm:px-6"
+                            dark:focus:before:bg-sky-400/10 sm:px-6 hvr-pulse-grow cursor-pointer"
                 >
-                  <span className="relative text-sm font-semibold text-gray-600 dark:text-gray-300">Sign In</span>
+                  <span className="relative text-sm font-semibold text-gray-600 hover:text-sky-400 dark:text-gray-300">Sign In</span>
                 </div>
                 <div
                   className="relative ml-auto flex h-9 items-center justify-center rounded-full bg-sky-500
-                            text-white font-bold sm:px-6 hover:bg-sky-400"
+                            text-white font-bold sm:px-6 hover:bg-sky-400 hvr-fade cursor-pointer"
                 >
                   <span className="relative text-sm font-semibold text-white">Sign Up</span>
                 </div>

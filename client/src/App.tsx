@@ -11,8 +11,6 @@ const App: FC = (): ReactElement => {
           <AppRouter />
         </div>
       </BrowserRouter>
-
-      <script src=""></script>
     </>
   );
 };

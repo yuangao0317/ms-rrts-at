@@ -1,8 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
+      backgroundImage: (theme) => ({
+        'hero-black': "url('src/assets/images/bg-hero-black.jpg')"
+      }),
+      colors: {},
       backgroundColor: {
         warning: '#f0ad4e',
         success: '#5cb85c',
