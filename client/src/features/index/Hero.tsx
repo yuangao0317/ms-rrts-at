@@ -1,14 +1,18 @@
-import { FC, ReactElement, RefObject, useEffect, useRef } from 'react';
+import { ChangeEvent, FC, ReactElement, RefObject, useEffect, useRef, useState } from 'react';
 import { replaceSpacesWithDash } from 'src/shared/utils/utils.service';
 import Typed from 'typed.js';
 import { v4 as uuidv4 } from 'uuid';
 import { FaSearch } from 'react-icons/fa';
 import Button from 'src/shared/buttons/Button';
+import TextInput from 'src/shared/inputs/TextInput';
+import { NavigateFunction, useNavigate } from 'react-router-dom';
 
 const categories: string[] = ['Graphics & Design', 'Digital Marketing', 'Writing & Translation', 'Programming & Tech'];
-
 const Hero: FC = (): ReactElement => {
   const typedElement: RefObject<HTMLSpanElement> = useRef<HTMLSpanElement>(null);
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const navigate: NavigateFunction = useNavigate();
+
   useEffect(() => {
     const script: HTMLScriptElement = document.createElement('script');
     script.src = 'src/assets/js/TweenLite.min.js';
@@ -48,6 +52,11 @@ const Hero: FC = (): ReactElement => {
     };
   }, []);
 
+  const navigateToSearchPage = (): void => {
+    const url = ``;
+    navigate(url);
+  };
+
   return (
     <section id="hightlight-content" className="relative bg-white pb-20 pt-40 dark:bg-gray-900 lg:pt-28">
       <canvas id="demo-canvas" className="absolute max-w-full"></canvas>
@@ -71,18 +80,22 @@ const Hero: FC = (): ReactElement => {
             <div className="flex w-full justify-between gap-6 lg:gap-12">
               <form className="mx-auto flex w-full items-center bg-white">
                 <div className="w-full">
-                  <input
+                  <TextInput
                     type="search"
                     className="w-full rounded-full px-4 py-1 text-gray-800 focus:outline-none"
                     placeholder="Search"
-                    defaultValue=""
-                  ></input>
+                    value={searchTerm}
+                    onChange={(event: ChangeEvent) => {
+                      setSearchTerm((event.target as HTMLInputElement).value);
+                    }}
+                  />
                 </div>
                 <div className="bg-sky-500">
                   <Button
                     type="submit"
                     className="flex h-12 w-12 items-center justify-center text-white"
                     label={<FaSearch className="h-5 w-5" />}
+                    onClick={navigateToSearchPage}
                   />
                 </div>
               </form>
