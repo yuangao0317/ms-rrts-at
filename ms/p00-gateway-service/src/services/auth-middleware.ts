@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { verify } from 'jsonwebtoken';
-import { IAuthPayload, NotAuthorizedError } from '@yuangao0317/ms-rrts-at-shared-common';
+import { BadRequestError, IAuthPayload, NotAuthorizedError } from '@yuangao0317/ms-rrts-at-shared-common';
 import { config } from '@gateway/config';
 
 class AuthMiddleware {
@@ -10,7 +10,7 @@ class AuthMiddleware {
     }
 
     try {
-      // JWT payload data structure: https://datatracker.ietf.org/doc/html/rfc7519#section-4.1 
+      // JWT payload data structure: https://datatracker.ietf.org/doc/html/rfc7519#section-4.1
       const payload: IAuthPayload = verify(req.session?.jwt, `${config.JWT_TOKEN}`) as IAuthPayload;
       req.currentUser = payload;
     } catch (error) {
@@ -18,6 +18,13 @@ class AuthMiddleware {
         'Token is not available. Please login again.',
         'GatewayService verifyUser() method invalid session error'
       );
+    }
+    next();
+  }
+
+  public checkAuthentication(req: Request, _res: Response, next: NextFunction): void {
+    if (!req.currentUser) {
+      throw new BadRequestError('Authentication is required to access this route.', 'GatewayService checkAuthentication() method error');
     }
     next();
   }

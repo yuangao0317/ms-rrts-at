@@ -14,8 +14,8 @@ class AuthService {
     axiosAuthInstance = this.axiosService.axios;
   }
 
-  async getCurrentUser(): Promise<AxiosResponse> {
-    const response: AxiosResponse = await axiosAuthInstance.get('/currentuser');
+  async getRefreshToken(username: string): Promise<AxiosResponse> {
+    const response: AxiosResponse = await axiosAuthInstance.get(`/refresh-token/${username}`);
     return response;
   }
 

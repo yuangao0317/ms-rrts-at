@@ -21,7 +21,7 @@ class Elasticsearch {
       log.info('GatewayService Connecting to ElasticSearch');
       try {
         const health: ClusterHealthResponse = await this.elasticsearchClient.cluster.health({});
-        log.info(`GatewayService ElasticSearch health status - ${health.status}`);
+        log.info(`GatewayService ElasticSearch health status - ${health.status.toUpperCase()}`);
         isConnected = true;
       } catch (error) {
         log.error('Connection to ElasticSearch failed, Retrying...');
