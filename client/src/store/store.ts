@@ -1,11 +1,12 @@
 // https://redux-toolkit.js.org/tutorials/typescript
 
-import { EnhancedStore, Reducer, combineReducers, configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore, Reducer } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
-import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
-import { api } from './api';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { FLUSH, PAUSE, PERSIST, persistReducer, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+
+import { api } from './api';
 
 const persistConfig = {
   key: 'root',
@@ -38,7 +39,6 @@ export const store = configureStore({
     }).concat(api.middleware)
 });
 setupListeners(store.dispatch);
-
 
 export type AppDispatch = typeof store.dispatch;
 

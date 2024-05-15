@@ -1,4 +1,4 @@
-import { CSSProperties, ChangeEvent, Dispatch, MouseEventHandler, ReactNode, SetStateAction } from 'react';
+import { ChangeEvent, CSSProperties, Dispatch, MouseEventHandler, ReactNode, SetStateAction } from 'react';
 
 export interface IButtonProps {
   label?: string | ReactNode;

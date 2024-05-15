@@ -1,11 +1,11 @@
 import { ChangeEvent, FC, ReactElement, useState } from 'react';
 import { FaEye, FaEyeSlash, FaTimes } from 'react-icons/fa';
+import { ISignInPayload } from 'src/features/auth/interfaces/auth.interface';
 import Alert from 'src/shared/alerts/Alert';
 import Button from 'src/shared/buttons/Button';
 import { IModalContainerProps } from 'src/shared/common.interface';
 import TextInput from 'src/shared/inputs/TextInput';
 import ModalContainer from 'src/shared/modals/ModalContainer';
-import { ISignInPayload } from 'src/features/auth/interfaces/auth.interface';
 
 const LoginModal: FC<IModalContainerProps> = ({ onClose, onToggle, onTogglePassword }): ReactElement => {
   const [userInfo, setUserInfo] = useState<ISignInPayload>({

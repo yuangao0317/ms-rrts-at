@@ -36,12 +36,13 @@ module.exports = {
       'warn',
       {
         singleQuote: true,
-        semi: true
-      },
-      'error',
-      {
+        semi: true,
         endOfLine: 'auto'
       }
+      // 'error',
+      // {
+      //   endOfLine: 'auto'
+      // }
     ],
     'react-refresh/only-export-components': 'warn',
     'no-multiple-empty-lines': [2, { max: 2 }],

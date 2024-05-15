@@ -1,10 +1,10 @@
 import { FC, ReactElement, useState } from 'react';
-import { FaChevronLeft, FaTimes, FaEye, FaCamera, FaEyeSlash } from 'react-icons/fa';
+import { FaCamera, FaChevronLeft, FaEye, FaEyeSlash,FaTimes } from 'react-icons/fa';
+import { ISignUpPayload } from 'src/features/auth/interfaces/auth.interface';
 import Alert from 'src/shared/alerts/Alert';
 import Button from 'src/shared/buttons/Button';
 import { IModalContainerProps } from 'src/shared/common.interface';
 import TextInput from 'src/shared/inputs/TextInput';
-import { ISignUpPayload } from 'src/features/auth/interfaces/auth.interface';
 import ModalContainer from 'src/shared/modals/ModalContainer';
 
 const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactElement => {

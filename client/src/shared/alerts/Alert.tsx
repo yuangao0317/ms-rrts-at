@@ -1,5 +1,4 @@
 import { FC, ReactElement } from 'react';
-
 import { IAlertProps, IAlertTypes } from 'src/shared/common.interface';
 
 const Alert: FC<IAlertProps> = ({ type, message }): ReactElement => {

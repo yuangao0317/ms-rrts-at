@@ -1,11 +1,11 @@
 import { ChangeEvent, FC, FormEvent, ReactElement, RefObject, useEffect, useRef, useState } from 'react';
+import { FaSearch } from 'react-icons/fa';
+import { NavigateFunction, useNavigate } from 'react-router-dom';
+import Button from 'src/shared/buttons/Button';
+import TextInput from 'src/shared/inputs/TextInput';
 import { replaceSpacesWithDash } from 'src/shared/utils/utils.service';
 import Typed from 'typed.js';
 import { v4 as uuidv4 } from 'uuid';
-import { FaSearch } from 'react-icons/fa';
-import Button from 'src/shared/buttons/Button';
-import TextInput from 'src/shared/inputs/TextInput';
-import { NavigateFunction, useNavigate } from 'react-router-dom';
 
 const categories: string[] = ['Graphics & Design', 'Digital Marketing', 'Writing & Translation', 'Programming & Tech'];
 const Hero: FC = (): ReactElement => {

@@ -1,7 +1,7 @@
-import { FC, LazyExoticComponent, ReactElement, Suspense, lazy, useState } from 'react';
+import { FC, lazy, LazyExoticComponent, ReactElement, Suspense, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { IHeader, IHeaderModalProps } from 'src/shared/headers/interfaces/header.interface';
 import { IButtonProps, IModalContainerProps } from 'src/shared/common.interface';
+import { IHeader, IHeaderModalProps } from 'src/shared/headers/interfaces/header.interface';
 
 const Button: LazyExoticComponent<FC<IButtonProps>> = lazy(() => import('src/shared/buttons/Button'));
 const LoginModal: LazyExoticComponent<FC<IModalContainerProps>> = lazy(() => import('src/features/auth/components/Login'));
