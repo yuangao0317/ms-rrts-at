@@ -7,3 +7,8 @@ export interface IHeaderModalProps {
   register: boolean;
   forgotPassword: boolean;
 }
+
+export interface INotification {
+  hasUnreadMessage?: boolean;
+  hasUnreadNotification?: boolean;
+}
