@@ -5,6 +5,7 @@ import { IButtonProps, IModalContainerProps } from 'src/shared/common.interface'
 
 const Button: LazyExoticComponent<FC<IButtonProps>> = lazy(() => import('src/shared/buttons/Button'));
 const LoginModal: LazyExoticComponent<FC<IModalContainerProps>> = lazy(() => import('src/features/auth/components/Login'));
+const RegisterModal: LazyExoticComponent<FC<IModalContainerProps>> = lazy(() => import('src/features/auth/components/Register'));
 
 const Header: FC<IHeader> = ({ navClass }): ReactElement => {
   const [showModal, setShowModal] = useState<IHeaderModalProps>({
@@ -21,6 +22,12 @@ const Header: FC<IHeader> = ({ navClass }): ReactElement => {
             onClose={() => setShowModal((item: IHeaderModalProps) => ({ ...item, login: false }))}
             onToggle={() => setShowModal((item: IHeaderModalProps) => ({ ...item, login: false, register: true }))}
             onTogglePassword={() => setShowModal((item: IHeaderModalProps) => ({ ...item, login: false, forgotPassword: true }))}
+          />
+        )}
+        {showModal.register && (
+          <RegisterModal
+            onClose={() => setShowModal((item: IHeaderModalProps) => ({ ...item, register: false }))}
+            onToggle={() => setShowModal((item: IHeaderModalProps) => ({ ...item, login: true, register: false }))}
           />
         )}
       </Suspense>
@@ -50,6 +57,7 @@ const Header: FC<IHeader> = ({ navClass }): ReactElement => {
                   <div
                     className="relative ml-auto flex h-9 items-center justify-center rounded-full bg-sky-500
                             text-white font-bold sm:px-6 hover:bg-sky-400 hvr-fade cursor-pointer"
+                    onClick={() => setShowModal((item: IHeaderModalProps) => ({ ...item, register: true }))}
                   >
                     <span className="relative text-sm font-semibold text-white">Sign Up</span>
                   </div>
