@@ -1,4 +1,4 @@
-import { CSSProperties, ChangeEvent, ReactNode } from 'react';
+import { CSSProperties, ChangeEvent, Dispatch, MouseEventHandler, ReactNode, SetStateAction } from 'react';
 
 export interface IButtonProps {
   label?: string | ReactNode;
@@ -33,4 +33,25 @@ export interface ITextInputProps {
   onBlur?: () => void;
   onKeyUp?: () => void;
   onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+}
+
+// Modals
+export interface IModalContainerProps {
+  children?: ReactNode;
+  onClose?: MouseEventHandler<HTMLButtonElement>;
+  onToggle?: Dispatch<SetStateAction<boolean>>;
+  onTogglePassword?: Dispatch<SetStateAction<boolean>>;
+}
+
+// Alerts
+export interface IAlertProps {
+  type: string;
+  message: string;
+}
+
+export interface IAlertTypes {
+  [key: string]: string;
+  success: string;
+  error: string;
+  warning: string;
 }

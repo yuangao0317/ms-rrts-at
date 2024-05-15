@@ -24,7 +24,6 @@
     largeHeader = document.getElementById('hightlight-content'); // canvas container with bg image
     width = largeHeader.clientWidth;
     height = largeHeader.clientHeight;
-    console.log(width, height);
     target = { x: width / 2, y: height / 2 };
 
     canvas = document.getElementById('demo-canvas'); //<canvas id="demo-canvas" width="964" height="919"></canvas>

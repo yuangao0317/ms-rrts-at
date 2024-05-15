@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, ReactElement, RefObject, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, FC, FormEvent, ReactElement, RefObject, useEffect, useRef, useState } from 'react';
 import { replaceSpacesWithDash } from 'src/shared/utils/utils.service';
 import Typed from 'typed.js';
 import { v4 as uuidv4 } from 'uuid';
@@ -57,14 +57,23 @@ const Hero: FC = (): ReactElement => {
     navigate(url);
   };
 
+  const handleTextInputChange = (event: ChangeEvent) => {
+    setSearchTerm((event.target as HTMLInputElement).value);
+  };
+
+  const handleSearchSubmit = (event: FormEvent) => {
+    event.preventDefault();
+    navigateToSearchPage();
+  };
+
   return (
     <section id="hightlight-content" className="relative bg-white pb-20 pt-40 dark:bg-gray-900 lg:pt-28">
       <canvas id="demo-canvas" className="absolute max-w-full"></canvas>
       <div className="relative m-auto px-6 xl:container md:px-12 lg:px-6">
-        <h3 className="animate__animated animate__fadeInDown mb-4 mt-4 max-w-2xl pb-2 text-center text-2xl font-normal dark:text-white lg:text-left">
+        <h3 className="mb-4 mt-4 max-w-2xl pb-2 text-center text-2xl font-normal dark:text-white lg:text-left animate__animated animate__fadeInDown">
           Expert categories: <span ref={typedElement}></span>
         </h3>
-        <h1 className="animate__animated animate__fadeInDown text-center text-4xl font-black text-blue-900 dark:text-white sm:mx-auto sm:w-10/12 sm:text-5xl md:w-10/12 md:text-5xl lg:w-auto lg:text-left xl:text-7xl">
+        <h1 className="text-center text-4xl font-black text-blue-900 dark:text-white sm:mx-auto sm:w-10/12 sm:text-5xl md:w-10/12 md:text-5xl lg:w-auto lg:text-left xl:text-7xl animate__animated animate__fadeInDown">
           Hire top-notch freelance experts <br className="hidden lg:block" />{' '}
           <span className="relative bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent dark:from-blue-400 dark:to-cyan-300">
             to elevate your projects
@@ -72,22 +81,22 @@ const Hero: FC = (): ReactElement => {
           .
         </h1>
         <div className="lg:flex">
-          <div className="animate__animated animate__fadeInUp relative mt-8 space-y-8 text-center sm:mx-auto sm:w-10/12 md:mt-16 md:w-2/3 lg:ml-0 lg:mr-20 lg:w-7/12 lg:text-left">
+          <div className="relative mt-8 space-y-8 text-center sm:mx-auto sm:w-10/12 md:mt-16 md:w-2/3 lg:ml-0 lg:mr-20 lg:w-7/12 lg:text-left animate__animated animate__fadeInUp">
             <p className="text-gray-700 dark:text-gray-300 sm:text-lg lg:w-11/12">
               Find the right freelance service for your next project.
             </p>
 
             <div className="flex w-full justify-between gap-6 lg:gap-12">
-              <form className="mx-auto flex w-full items-center bg-white">
+              <form className="mx-auto flex w-full items-center bg-white" onSubmit={handleSearchSubmit}>
                 <div className="w-full">
                   <TextInput
+                    id="search"
+                    name="search"
                     type="search"
                     className="w-full rounded-full px-4 py-1 text-gray-800 focus:outline-none"
                     placeholder="Search"
                     value={searchTerm}
-                    onChange={(event: ChangeEvent) => {
-                      setSearchTerm((event.target as HTMLInputElement).value);
-                    }}
+                    onChange={handleTextInputChange}
                   />
                 </div>
                 <div className="bg-sky-500">
@@ -116,7 +125,7 @@ const Hero: FC = (): ReactElement => {
               ))}
             </div>
           </div>
-          <div className="animate__animated animate__zoomIn -right-10 hidden lg:-mt-10 lg:flex">
+          <div className="-right-10 hidden lg:-mt-10 lg:flex animate__animated animate__zoomIn">
             <div className="relative">
               <img src="src/assets/images/hero-coop.png" className="relative hvr-grow" alt="" loading="lazy" />
             </div>

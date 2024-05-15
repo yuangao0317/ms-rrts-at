@@ -1,6 +1,6 @@
 import { forwardRef, ForwardRefExoticComponent, RefAttributes } from 'react';
 
-import { ITextInputProps } from '../props.interface';
+import { ITextInputProps } from '../common.interface';
 
 const TextInput: ForwardRefExoticComponent<Omit<ITextInputProps, 'ref'> & RefAttributes<HTMLInputElement>> = forwardRef((props, ref) => (
   <>
