@@ -1,4 +1,4 @@
-import { FC, LazyExoticComponent, ReactElement, Suspense, lazy } from 'react';
+import { FC, lazy, LazyExoticComponent, ReactElement, Suspense } from 'react';
 import { IHeader } from 'src/shared/headers/interfaces/header.interface';
 
 const IndexHeader: LazyExoticComponent<FC<IHeader>> = lazy(() => import('src/shared/headers/components/Header'));

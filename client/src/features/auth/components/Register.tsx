@@ -1,5 +1,5 @@
 import { FC, ReactElement, useState } from 'react';
-import { FaCamera, FaChevronLeft, FaEye, FaEyeSlash,FaTimes } from 'react-icons/fa';
+import { FaCamera, FaChevronLeft, FaEye, FaEyeSlash, FaTimes } from 'react-icons/fa';
 import { ISignUpPayload } from 'src/features/auth/interfaces/auth.interface';
 import Alert from 'src/shared/alerts/Alert';
 import Button from 'src/shared/buttons/Button';
