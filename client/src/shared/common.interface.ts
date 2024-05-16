@@ -1,4 +1,20 @@
+import { SerializedError } from '@reduxjs/toolkit';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { ChangeEvent, CSSProperties, Dispatch, MouseEventHandler, ReactNode, SetStateAction } from 'react';
+import { IAuthDocument, IAuthResponse } from 'src/features/auth/interfaces/auth.interface';
+
+export interface IQueryResponse {
+  data: IAuthResponse;
+  error: FetchBaseQueryError | SerializedError;
+}
+
+export interface IResponse {
+  message?: string;
+  token?: string;
+  user?: IAuthDocument;
+  browserName?: string;
+  deviceType?: string;
+}
 
 export interface IButtonProps {
   label?: string | ReactNode;

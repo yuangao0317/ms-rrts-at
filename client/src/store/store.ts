@@ -2,7 +2,7 @@
 
 import { combineReducers, configureStore, Reducer } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FLUSH, PAUSE, PERSIST, persistReducer, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
@@ -42,5 +42,8 @@ setupListeners(store.dispatch);
 
 export type AppDispatch = typeof store.dispatch;
 
-export const useAppDispatch: () => AppDispatch = useDispatch;
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+// export const useAppDispatch: () => AppDispatch = useDispatch;
+// export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+
+export const useAppDispatch = useDispatch.withTypes<AppDispatch>();
+export const useAppSelector = useSelector.withTypes<RootState>();

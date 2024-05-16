@@ -22,7 +22,8 @@
     "redux-persist": "^6.0.0",
     "sass": "^1.77.1",
     "typed.js": "^2.1.0",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
