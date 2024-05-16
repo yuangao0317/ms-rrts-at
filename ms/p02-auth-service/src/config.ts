@@ -1,10 +1,10 @@
 import dotenv from 'dotenv';
 
 if (process.env.NODE_ENV === 'development') {
-    dotenv.config({ path: '.env.dev' });
-  } else {
-    dotenv.config({});
-  }
+  dotenv.config({ path: '.env.dev' });
+} else {
+  dotenv.config({});
+}
 
 if (process.env.ENABLE_APM === '1') {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -49,3 +49,6 @@ class Config {
 }
 
 export const config: Config = new Config();
+
+export const AUTH_NOTIFICATION_EMAIL_EX = 'ms-auth-notification-email-exchange';
+export const AUTH_NOTIFICATION_EMAIL_RK = 'auth-email';

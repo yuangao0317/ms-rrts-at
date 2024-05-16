@@ -13,7 +13,7 @@ import { createAuthUser, getUserByUsernameOrEmail, signToken, updateProfilePictu
 import { UploadApiResponse } from 'cloudinary';
 import { Request, Response } from 'express';
 import { v4 as uuidV4 } from 'uuid';
-import { config } from '@auth/config';
+import { AUTH_NOTIFICATION_EMAIL_EX, AUTH_NOTIFICATION_EMAIL_RK, config } from '@auth/config';
 import { publishDirectMessage } from '@auth/queues/auth.producer';
 import { authChannel } from '@auth/server';
 import { StatusCodes } from 'http-status-codes';
@@ -59,8 +59,8 @@ export async function create(req: Request, res: Response): Promise<void> {
     };
     await publishDirectMessage(
       authChannel,
-      'ms-auth-notification-email-exchange',
-      'auth-email',
+      AUTH_NOTIFICATION_EMAIL_EX,
+      AUTH_NOTIFICATION_EMAIL_RK,
       JSON.stringify(messageDetails),
       'Verify email message has been sent to Notification Service.'
     );
