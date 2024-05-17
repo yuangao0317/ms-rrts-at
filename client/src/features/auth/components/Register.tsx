@@ -103,7 +103,6 @@ const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactEl
     setAlertMessage('');
   };
   const buttonClassNames = (): string => {
-    console.log('userInfo.country', userInfo.country);
     const isDisabled = !userInfo.country || !userInfo.profilePicture;
     return classNames('text-md block w-full rounded px-8 py-2 text-center font-bold text-white focus:outline-none', {
       'bg-sky-500 cursor-pointer hover:bg-sky-400': !isDisabled,

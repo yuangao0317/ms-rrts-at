@@ -73,7 +73,6 @@ const Dropdown: FC<IDropdownProps> = ({
             placeholder="Select Country"
             onChange={(event: ChangeEvent) => {
               const inputValue: string = (event.target as HTMLInputElement).value;
-              console.log('inputValue', inputValue);
               setInputText(inputValue);
               if (setValue) {
                 setValue(inputValue);
