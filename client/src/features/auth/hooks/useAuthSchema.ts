@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { IUseAuthSchema } from 'src/features/auth/interfaces/auth.interface';
+import { validationErrorsType } from 'src/shared/common.interface';
 
-const useAuthSchema = ({ schema, userInfo }: IUseAuthSchema): [() => Promise<boolean>, string[]] => {
-  const [validationErrors, setValidationErrors] = useState<string[]>([]);
+const useAuthSchema = ({ schema, userInfo }: IUseAuthSchema): [() => Promise<boolean>, validationErrorsType[]] => {
+  const [validationErrors, setValidationErrors] = useState<validationErrorsType[]>([]);
 
   async function schemaValidation(): Promise<boolean> {
     await schema

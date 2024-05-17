@@ -1,7 +1,7 @@
 import { SerializedError } from '@reduxjs/toolkit';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { ChangeEvent, CSSProperties, Dispatch, MouseEventHandler, ReactNode, SetStateAction } from 'react';
-import { IAuthDocument, IAuthResponse } from 'src/features/auth/interfaces/auth.interface';
+import { IAuthDocument, IAuthResponse, ISignInPayload, ISignUpPayload } from 'src/features/auth/interfaces/auth.interface';
 
 export interface IQueryResponse {
   data: IAuthResponse;
@@ -84,3 +84,5 @@ export interface IDropdownProps {
   setValue?: Dispatch<SetStateAction<string>>;
   onClick?: (item: string) => void;
 }
+
+export type validationErrorsType = ISignInPayload | ISignUpPayload;

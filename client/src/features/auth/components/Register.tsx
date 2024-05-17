@@ -1,9 +1,12 @@
 import { ChangeEvent, FC, ReactElement, useCallback, useRef, useState } from 'react';
 import { FaCamera, FaChevronLeft, FaEye, FaEyeSlash, FaTimes } from 'react-icons/fa';
+import { useAuthSchema } from 'src/features/auth/hooks/useAuthSchema';
 import { ISignUpPayload } from 'src/features/auth/interfaces/auth.interface';
+import { registerUserSchema } from 'src/features/auth/schemas/auth.schema';
+import { useSignUpMutation } from 'src/features/auth/services/auth.service';
 import Alert from 'src/shared/alerts/Alert';
 import Button from 'src/shared/buttons/Button';
-import { IModalContainerProps } from 'src/shared/common.interface';
+import { IModalContainerProps, IResponse } from 'src/shared/common.interface';
 import Dropdown from 'src/shared/dropdowns/Dropdown';
 import TextInput from 'src/shared/inputs/TextInput';
 import ModalContainer from 'src/shared/modals/ModalContainer';
@@ -21,31 +24,49 @@ const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactEl
   const [step, setStep] = useState<number>(1);
   const [passwordType, setPasswordType] = useState<string>('password');
   const [selectedCountry, setSelectedCountry] = useState<string>('Select Country');
+  const [schemaValidation] = useAuthSchema({ schema: registerUserSchema, userInfo });
+  const [signUp, { isLoading }] = useSignUpMutation();
+  const [alertMessage, setAlertMessage] = useState<string>('');
 
   const [profileImage, setProfileImage] = useState<string>('https://placehold.co/330x220?text=Profile+Image');
   const [showImageSelect, setShowImageSelect] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFileChange = async (event: ChangeEvent): Promise<void> => {
-    const target: HTMLInputElement = event.target as HTMLInputElement;
-    if (target.files) {
-      const file: File = target.files[0];
-      const isValid = checkImage(file, 'image');
-      if (isValid) {
-        const dataImage: string | ArrayBuffer | null = await readAsBase64(file);
-        setProfileImage(`${dataImage}`);
-        setUserInfo({ ...userInfo, profilePicture: `${dataImage}` });
+  const handleFileChange = useCallback(
+    async (event: ChangeEvent): Promise<void> => {
+      const target: HTMLInputElement = event.target as HTMLInputElement;
+      if (target.files) {
+        const file: File = target.files[0];
+        const isValid = checkImage(file, 'image');
+        if (isValid) {
+          const dataImage: string | ArrayBuffer | null = await readAsBase64(file);
+          setProfileImage(`${dataImage}`);
+          setUserInfo({ ...userInfo, profilePicture: `${dataImage}` });
+        }
+        setShowImageSelect(false);
       }
-      setShowImageSelect(false);
+    },
+    [userInfo]
+  );
+
+  const onRegisterUser = useCallback(async (): Promise<void> => {
+    try {
+      const isValid: boolean = await schemaValidation();
+      if (isValid) {
+        const result: IResponse = await signUp(userInfo).unwrap();
+        setAlertMessage(result.user!.username!);
+      }
+    } catch (error) {
+      setAlertMessage(error?.data.message);
     }
-  };
+  }, [schemaValidation, signUp, userInfo]);
 
   const onHandleDropdownSelect = useCallback(
     (item: string) => {
       setSelectedCountry(item);
       setUserInfo({ ...userInfo, country: item });
     },
-    [userInfo, setSelectedCountry, setUserInfo]
+    [userInfo]
   );
 
   return (
@@ -89,7 +110,7 @@ const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactEl
           </ol>
         </div>
         <div className="px-5">
-          <Alert type="error" message="test message" />
+          <Alert type="error" message={alertMessage} />
         </div>
 
         {step === 1 && (
@@ -216,7 +237,8 @@ const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactEl
               className={`text-md block w-full cursor-pointer rounded bg-sky-500 px-8 py-2 text-center font-bold text-white hover:bg-sky-400 focus:outline-none ${
                 !userInfo.country || !userInfo.profilePicture ? 'cursor-not-allowed bg-gray-400 hover:bg-gray-400' : 'cursor-pointer'
               }`}
-              label="SIGNUP"
+              label={`${isLoading ? 'SIGNUP IN PROGRESS...' : 'SIGNUP'}`}
+              onClick={onRegisterUser}
             />
           </div>
         )}

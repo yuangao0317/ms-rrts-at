@@ -1,3 +1,5 @@
+// https://redux.js.org/tutorials/essentials/part-8-rtk-query-advanced#invalidating-specific-items
+
 import { BaseQueryFn, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
 import { getDataFromSessionStorage } from 'src/shared/utils/utils.service';
 
