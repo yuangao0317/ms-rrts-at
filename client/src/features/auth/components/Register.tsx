@@ -1,4 +1,4 @@
-import { FC, ReactElement, useState } from 'react';
+import { ChangeEvent, FC, ReactElement, useCallback, useRef, useState } from 'react';
 import { FaCamera, FaChevronLeft, FaEye, FaEyeSlash, FaTimes } from 'react-icons/fa';
 import { ISignUpPayload } from 'src/features/auth/interfaces/auth.interface';
 import Alert from 'src/shared/alerts/Alert';
@@ -7,6 +7,7 @@ import { IModalContainerProps } from 'src/shared/common.interface';
 import Dropdown from 'src/shared/dropdowns/Dropdown';
 import TextInput from 'src/shared/inputs/TextInput';
 import ModalContainer from 'src/shared/modals/ModalContainer';
+import { checkImage, readAsBase64 } from 'src/shared/utils/image.utils';
 import { countriesList } from 'src/shared/utils/utils.service';
 
 const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactElement => {
@@ -21,10 +22,31 @@ const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactEl
   const [passwordType, setPasswordType] = useState<string>('password');
   const [selectedCountry, setSelectedCountry] = useState<string>('Select Country');
 
-  const onHandleDropdownSelect = (item: string) => {
-    setSelectedCountry(item);
-    setUserInfo({ ...userInfo, country: item });
+  const [profileImage, setProfileImage] = useState<string>('https://placehold.co/330x220?text=Profile+Image');
+  const [showImageSelect, setShowImageSelect] = useState<boolean>(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = async (event: ChangeEvent): Promise<void> => {
+    const target: HTMLInputElement = event.target as HTMLInputElement;
+    if (target.files) {
+      const file: File = target.files[0];
+      const isValid = checkImage(file, 'image');
+      if (isValid) {
+        const dataImage: string | ArrayBuffer | null = await readAsBase64(file);
+        setProfileImage(`${dataImage}`);
+        setUserInfo({ ...userInfo, profilePicture: `${dataImage}` });
+      }
+      setShowImageSelect(false);
+    }
   };
+
+  const onHandleDropdownSelect = useCallback(
+    (item: string) => {
+      setSelectedCountry(item);
+      setUserInfo({ ...userInfo, country: item });
+    },
+    [userInfo, setSelectedCountry, setUserInfo]
+  );
 
   return (
     <ModalContainer>
@@ -130,6 +152,49 @@ const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactEl
         )}
         {step === 2 && (
           <div className="relative px-5 py-5">
+            <div className="relative flex flex-col items-center">
+              <label htmlFor="profilePicture" className="text-sm font-bold leading-tight tracking-normal text-gray-800">
+                Profile Picture
+              </label>
+              <div
+                onMouseEnter={() => setShowImageSelect(true)}
+                onMouseLeave={() => setShowImageSelect(false)}
+                className="relative mb-5 mt-2 w-[20%] lg:w-[40%] cursor-pointer flex justify-center "
+              >
+                {profileImage ? (
+                  <img
+                    id="profilePicture"
+                    src={profileImage}
+                    alt="Profile Picture"
+                    className="left-0 top-0 h-20 w-20 lg:h-40 lg:w-40 rounded-full bg-white object-cover"
+                  />
+                ) : (
+                  <div className="left-0 top-0 flex h-20 w-20 lg:h-40 lg:w-40 cursor-pointer justify-center rounded-full bg-[#dee1e7]"></div>
+                )}
+
+                {showImageSelect && (
+                  <div
+                    onClick={() => fileInputRef.current?.click()}
+                    className="absolute left-0 top-0 flex h-20 w-20 lg:h-40 lg:w-40 cursor-pointer justify-center rounded-full bg-[#dee1e7]"
+                  >
+                    <FaCamera className="flex self-center" />
+                  </div>
+                )}
+
+                <TextInput
+                  name="image"
+                  ref={fileInputRef}
+                  type="file"
+                  style={{ display: 'none' }}
+                  onClick={() => {
+                    if (fileInputRef.current) {
+                      fileInputRef.current.value = '';
+                    }
+                  }}
+                  onChange={handleFileChange}
+                />
+              </div>
+            </div>
             <div className="h-24">
               <label htmlFor="country" className="text-sm font-bold leading-tight tracking-normal text-gray-800">
                 Country
@@ -144,19 +209,6 @@ const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactEl
                   setValue={setSelectedCountry}
                   onClick={onHandleDropdownSelect}
                 />
-              </div>
-            </div>
-            <div className="relative">
-              <label htmlFor="profilePicture" className="text-sm font-bold leading-tight tracking-normal text-gray-800">
-                Profile Picture
-              </label>
-              <div className="relative mb-5 mt-2 w-[20%] cursor-pointer">
-                <img id="profilePicture" src="" alt="Profile Picture" className="" />
-                <div className="left-0 top-0 flex h-20 w-20 cursor-pointer justify-center rounded-full bg-[#dee1e7]"></div>
-                <div className="absolute left-0 top-0 flex h-20 w-20 cursor-pointer justify-center rounded-full bg-[#dee1e7]">
-                  <FaCamera className="flex self-center" />
-                </div>
-                <TextInput name="image" type="file" />
               </div>
             </div>
             <Button
