@@ -1,3 +1,5 @@
+import { ObjectSchema } from 'yup';
+
 export interface ISignInPayload {
   [key: string]: string | null | undefined;
   username: string;
@@ -50,4 +52,9 @@ export interface IAuthDocument {
   passwordResetExpires?: Date;
   browserName?: string;
   deviceType?: string;
+}
+
+export interface IUseAuthSchema {
+  schema: ObjectSchema<ISignInPayload | ISignUpPayload>;
+  userInfo: ISignInPayload | ISignUpPayload;
 }
