@@ -3,12 +3,13 @@ import 'react-toastify/dist/ReactToastify.css';
 import classNames from 'classnames';
 import { ChangeEvent, FC, ReactElement, useCallback, useRef, useState } from 'react';
 import { FaCamera, FaChevronLeft, FaEye, FaEyeSlash, FaTimes } from 'react-icons/fa';
-import { toast, ToastContainer } from 'react-toastify';
+import { Id, toast } from 'react-toastify';
 import { useAuthSchema } from 'src/features/auth/hooks/useAuthSchema';
 import { ISignUpPayload } from 'src/features/auth/interfaces/auth.interface';
 import { registerUserSchema } from 'src/features/auth/schemas/auth.schema';
 import { useSignUpMutation } from 'src/features/auth/services/auth.service';
 import Alert from 'src/shared/alerts/Alert';
+import PageToastAlert from 'src/shared/alerts/PageAlert';
 import Button from 'src/shared/buttons/Button';
 import { IModalContainerProps, IResponse, validationErrorsType } from 'src/shared/common.interface';
 import Dropdown from 'src/shared/dropdowns/Dropdown';
@@ -31,6 +32,7 @@ const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactEl
   const [schemaValidation] = useAuthSchema({ schema: registerUserSchema, userInfo });
   const [signUp, { error, isLoading }] = useSignUpMutation();
   const [alertMessage, setAlertMessage] = useState<string>('');
+  const toastRef = useRef<Id | null>(null);
 
   const [profileImage, setProfileImage] = useState<string>('https://placehold.co/330x220?text=Profile+Image');
   const [showImageSelect, setShowImageSelect] = useState<boolean>(false);
@@ -68,12 +70,15 @@ const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactEl
       // setAlertMessage(error?.data.message);
       console.log(err);
       if ('status' in err) {
+        if (toastRef.current) {
+          toast.dismiss(toastRef.current);
+        }
         if (err.status === 404) {
-          toast.error('Endpoint not found. Please check the URL.');
+          toastRef.current = toast.error('Endpoint not found. Please check the URL.');
         } else if (err.status === 400) {
-          toast.error('Bad Request. Please check the input data.');
+          toastRef.current = toast.error('Bad Request. Please check the input data.');
         } else {
-          toast.error(err.data ? 'An unexpected error occurred. Please try again.' : err.data.message);
+          toastRef.current = toast.error(err.data ? 'An unexpected error occurred. Please try again.' : err.data.message);
         }
       }
     }
@@ -112,19 +117,7 @@ const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactEl
 
   return (
     <>
-      <ToastContainer
-        className="min-w-max"
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
+      <PageToastAlert />
       <ModalContainer>
         <div className="relative top-[10%] mx-auto w-11/12 max-w-md rounded bg-white md:w-2/3">
           <div className="relative px-5 py-5">
