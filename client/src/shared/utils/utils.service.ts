@@ -21,17 +21,20 @@ export const countriesList = (): string[] => {
   return Object.values(countriesObj);
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const handleCatchFetchError = (err: any): string => {
-  if ('status' in err) {
-    if (err.status === 404) {
-      return 'Endpoint not found. Please check the URL.';
-    } else if (err.status === 400) {
-      return 'Bad Request. Please check the input data.';
-    } else {
-      return err.data ? 'An unexpected error occurred. Please try again.' : (err.data.message as string);
-    }
+export interface ApiErrorResponse {
+  status: number;
+  data: { message: string; errors: { [k: string]: string[] } };
+}
+export function isApiResponseError(error: unknown): error is ApiErrorResponse {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return typeof error === 'object' && error != null && 'status' in error && typeof (error as any).status === 'number';
+}
+export const handleCatchFetchError = (err: ApiErrorResponse): string => {
+  if (err.status === 404) {
+    return 'Endpoint not found. Please check the URL.';
+  } else if (err.status === 400) {
+    return 'Bad Request. Please check the input data.';
+  } else {
+    return err.data.message || 'An unexpected error occurred. Please try again.';
   }
-
-  return 'An unexpected error occurred. Please try again.';
 };
