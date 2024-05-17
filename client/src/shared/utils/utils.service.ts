@@ -22,7 +22,7 @@ export const countriesList = (): string[] => {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const handleCatchError = (err: any): string => {
+export const handleCatchFetchError = (err: any): string => {
   if ('status' in err) {
     if (err.status === 404) {
       return 'Endpoint not found. Please check the URL.';
