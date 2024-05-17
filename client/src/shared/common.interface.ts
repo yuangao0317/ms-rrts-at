@@ -71,3 +71,16 @@ export interface IAlertTypes {
   error: string;
   warning: string;
 }
+
+// Dropdowns
+export interface IDropdownProps {
+  text: string;
+  items: string[];
+  maxHeight: string;
+  mainClassNames?: string;
+  dropdownClassNames?: string;
+  showSearchInput?: boolean;
+  style?: CSSProperties;
+  setValue?: Dispatch<SetStateAction<string>>;
+  onClick?: (item: string) => void;
+}

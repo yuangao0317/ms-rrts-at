@@ -4,11 +4,12 @@ import { ISignUpPayload } from 'src/features/auth/interfaces/auth.interface';
 import Alert from 'src/shared/alerts/Alert';
 import Button from 'src/shared/buttons/Button';
 import { IModalContainerProps } from 'src/shared/common.interface';
+import Dropdown from 'src/shared/dropdowns/Dropdown';
 import TextInput from 'src/shared/inputs/TextInput';
 import ModalContainer from 'src/shared/modals/ModalContainer';
+import { countriesList } from 'src/shared/utils/utils.service';
 
 const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactElement => {
-  const [step, setStep] = useState<number>(1);
   const [userInfo, setUserInfo] = useState<ISignUpPayload>({
     username: '',
     password: '',
@@ -16,7 +17,14 @@ const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactEl
     country: '',
     profilePicture: ''
   });
+  const [step, setStep] = useState<number>(1);
   const [passwordType, setPasswordType] = useState<string>('password');
+  const [selectedCountry, setSelectedCountry] = useState<string>('Select Country');
+
+  const onHandleDropdownSelect = (item: string) => {
+    setSelectedCountry(item);
+    setUserInfo({ ...userInfo, country: item });
+  };
 
   return (
     <ModalContainer>
@@ -126,7 +134,17 @@ const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactEl
               <label htmlFor="country" className="text-sm font-bold leading-tight tracking-normal text-gray-800">
                 Country
               </label>
-              <div id="country" className="relative mb-5 mt-2"></div>
+              <div id="country" className="relative mb-5 mt-2">
+                <Dropdown
+                  text={selectedCountry}
+                  maxHeight="200"
+                  mainClassNames="absolute bg-white z-50"
+                  showSearchInput={true}
+                  items={countriesList()}
+                  setValue={setSelectedCountry}
+                  onClick={onHandleDropdownSelect}
+                />
+              </div>
             </div>
             <div className="relative">
               <label htmlFor="profilePicture" className="text-sm font-bold leading-tight tracking-normal text-gray-800">
