@@ -16,7 +16,7 @@ import Dropdown from 'src/shared/dropdowns/Dropdown';
 import TextInput from 'src/shared/inputs/TextInput';
 import ModalContainer from 'src/shared/modals/ModalContainer';
 import { checkImage, readAsBase64 } from 'src/shared/utils/image.utils';
-import { countriesList } from 'src/shared/utils/utils.service';
+import { countriesList, handleCatchError } from 'src/shared/utils/utils.service';
 
 const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactElement => {
   const [userInfo, setUserInfo] = useState<ISignUpPayload>({
@@ -69,18 +69,10 @@ const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactEl
     } catch (err) {
       // setAlertMessage(error?.data.message);
       console.log(err);
-      if ('status' in err) {
-        if (toastRef.current) {
-          toast.dismiss(toastRef.current);
-        }
-        if (err.status === 404) {
-          toastRef.current = toast.error('Endpoint not found. Please check the URL.');
-        } else if (err.status === 400) {
-          toastRef.current = toast.error('Bad Request. Please check the input data.');
-        } else {
-          toastRef.current = toast.error(err.data ? 'An unexpected error occurred. Please try again.' : err.data.message);
-        }
+      if (toastRef.current) {
+        toast.dismiss(toastRef.current);
       }
+      toastRef.current = toast.error(handleCatchError(err));
     }
   }, [schemaValidation, userInfo, signUp]);
 
