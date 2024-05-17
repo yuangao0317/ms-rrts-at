@@ -21,7 +21,7 @@ const registerUserSchema: ObjectSchema<ISignUpPayload> = object({
     .max(18, { username: 'Username must contain less than 18 characters' }),
   password: string()
     .required({ password: 'Password is a required field' })
-    .min(8, { password: 'Password must contain at least 6 characters' })
+    .min(8, { password: 'Password must contain at least 8 characters' })
     .max(18, { password: 'Password must contain less than 18 characters' }),
   email: string().email({ email: 'Email is a required field' }).required({ email: 'Email is a required field' }),
   country: string().notOneOf(['Select Country'], { country: 'Select a country' }).required({ country: 'Country is a required field' }),

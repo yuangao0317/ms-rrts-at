@@ -43,7 +43,7 @@ export interface ITextInputProps {
   maxLength?: number;
   min?: string | number;
   max?: string | number;
-  onChange?: (event: ChangeEvent) => void;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   onClick?: () => void;
   onFocus?: () => void;
   onBlur?: () => void;

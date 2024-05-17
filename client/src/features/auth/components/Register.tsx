@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { ChangeEvent, FC, ReactElement, useCallback, useRef, useState } from 'react';
 import { FaCamera, FaChevronLeft, FaEye, FaEyeSlash, FaTimes } from 'react-icons/fa';
 import { useAuthSchema } from 'src/features/auth/hooks/useAuthSchema';
@@ -6,7 +7,7 @@ import { registerUserSchema } from 'src/features/auth/schemas/auth.schema';
 import { useSignUpMutation } from 'src/features/auth/services/auth.service';
 import Alert from 'src/shared/alerts/Alert';
 import Button from 'src/shared/buttons/Button';
-import { IModalContainerProps, IResponse } from 'src/shared/common.interface';
+import { IModalContainerProps, IResponse, validationErrorsType } from 'src/shared/common.interface';
 import Dropdown from 'src/shared/dropdowns/Dropdown';
 import TextInput from 'src/shared/inputs/TextInput';
 import ModalContainer from 'src/shared/modals/ModalContainer';
@@ -23,9 +24,9 @@ const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactEl
   });
   const [step, setStep] = useState<number>(1);
   const [passwordType, setPasswordType] = useState<string>('password');
-  const [selectedCountry, setSelectedCountry] = useState<string>('Select Country');
+  const [selectedCountry, setSelectedCountry] = useState<string>('');
   const [schemaValidation] = useAuthSchema({ schema: registerUserSchema, userInfo });
-  const [signUp, { isLoading }] = useSignUpMutation();
+  const [signUp, { error, isLoading }] = useSignUpMutation();
   const [alertMessage, setAlertMessage] = useState<string>('');
 
   const [profileImage, setProfileImage] = useState<string>('https://placehold.co/330x220?text=Profile+Image');
@@ -51,15 +52,22 @@ const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactEl
 
   const onRegisterUser = useCallback(async (): Promise<void> => {
     try {
-      const isValid: boolean = await schemaValidation();
+      const [isValid, recievedErrors]: [boolean, validationErrorsType[]] = await schemaValidation();
+      // const isValid: boolean = await schemaValidation();
       if (isValid) {
+        console.log(userInfo);
         const result: IResponse = await signUp(userInfo).unwrap();
-        setAlertMessage(result.user!.username!);
+        // setAlertMessage(result.user!.username!);
+        console.log(result);
+      } else {
+        setAlertMessage(Object.values(recievedErrors[0])[0] as string);
       }
-    } catch (error) {
-      setAlertMessage(error?.data.message);
+    } catch (err) {
+      // setAlertMessage(error?.data.message);
+      console.log(err);
+      console.log(error);
     }
-  }, [schemaValidation, signUp, userInfo]);
+  }, [schemaValidation, userInfo, signUp, error]);
 
   const onHandleDropdownSelect = useCallback(
     (item: string) => {
@@ -68,6 +76,20 @@ const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactEl
     },
     [userInfo]
   );
+
+  const handleFormChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setUserInfo({
+      ...userInfo,
+      [e.target.name]: e.target.value
+    });
+    setAlertMessage('');
+  };
+
+  const isDisabled = !userInfo.country || !userInfo.profilePicture;
+  const buttonClassNames = classNames('text-md block w-full rounded px-8 py-2 text-center font-bold text-white focus:outline-none', {
+    'bg-sky-500 cursor-pointer hover:bg-sky-400': !isDisabled,
+    'bg-gray-400 cursor-not-allowed hover:bg-gray-400': isDisabled
+  });
 
   return (
     <ModalContainer>
@@ -109,9 +131,7 @@ const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactEl
             </li>
           </ol>
         </div>
-        <div className="px-5">
-          <Alert type="error" message={alertMessage} />
-        </div>
+        <div className="px-5">{alertMessage && <Alert type="error" message={alertMessage} />}</div>
 
         {step === 1 && (
           <div className="relative px-5 py-5">
@@ -126,6 +146,7 @@ const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactEl
                 value={userInfo.username}
                 className="mb-5 mt-2 flex h-10 w-full items-center rounded border border-gray-300 pl-3 text-sm font-normal text-gray-600 focus:border focus:border-sky-500/50 focus:outline-none"
                 placeholder="Enter username"
+                onChange={handleFormChange}
               />
             </div>
             <div>
@@ -139,6 +160,7 @@ const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactEl
                 value={userInfo.email}
                 className="mb-5 mt-2 flex h-10 w-full items-center rounded border border-gray-300 pl-3 text-sm font-normal text-gray-600 focus:border focus:border-sky-500/50 focus:outline-none"
                 placeholder="Enter email"
+                onChange={handleFormChange}
               />
             </div>
             <div>
@@ -160,6 +182,7 @@ const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactEl
                   value={userInfo.password}
                   className="flex h-10 w-full items-center rounded border border-gray-300 pl-3 text-sm font-normal text-gray-600 focus:border focus:border-sky-500/50 focus:outline-none"
                   placeholder="Enter password"
+                  onChange={handleFormChange}
                 />
               </div>
             </div>
@@ -190,13 +213,13 @@ const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactEl
                     className="left-0 top-0 h-20 w-20 lg:h-40 lg:w-40 rounded-full bg-white object-cover"
                   />
                 ) : (
-                  <div className="left-0 top-0 flex h-20 w-20 lg:h-40 lg:w-40 cursor-pointer justify-center rounded-full bg-[#dee1e7]"></div>
+                  <div className="left-0 top-0 flex h-20 w-20 lg:h-40 lg:w-40 cursor-pointer rounded-full bg-[#dee1e7]"></div>
                 )}
 
                 {showImageSelect && (
                   <div
                     onClick={() => fileInputRef.current?.click()}
-                    className="absolute left-0 top-0 flex h-20 w-20 lg:h-40 lg:w-40 cursor-pointer justify-center rounded-full bg-[#dee1e7]"
+                    className="absolute left-0 top-0 flex h-20 w-20 lg:h-40 lg:w-40 cursor-pointer justify-center rounded-full bg-[#dee1e7]/20"
                   >
                     <FaCamera className="flex self-center" />
                   </div>
@@ -234,9 +257,7 @@ const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactEl
             </div>
             <Button
               disabled={!userInfo.country || !userInfo.profilePicture}
-              className={`text-md block w-full cursor-pointer rounded bg-sky-500 px-8 py-2 text-center font-bold text-white hover:bg-sky-400 focus:outline-none ${
-                !userInfo.country || !userInfo.profilePicture ? 'cursor-not-allowed bg-gray-400 hover:bg-gray-400' : 'cursor-pointer'
-              }`}
+              className={buttonClassNames}
               label={`${isLoading ? 'SIGNUP IN PROGRESS...' : 'SIGNUP'}`}
               onClick={onRegisterUser}
             />
