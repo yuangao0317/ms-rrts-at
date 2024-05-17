@@ -20,3 +20,18 @@ export const countriesList = (): string[] => {
   const countriesObj: LocalizedCountryNames<{ select: 'official' }> = countries.getNames('en', { select: 'official' });
   return Object.values(countriesObj);
 };
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const handleCatchError = (err: any): string => {
+  if ('status' in err) {
+    if (err.status === 404) {
+      return 'Endpoint not found. Please check the URL.';
+    } else if (err.status === 400) {
+      return 'Bad Request. Please check the input data.';
+    } else {
+      return err.data ? 'An unexpected error occurred. Please try again.' : (err.data.message as string);
+    }
+  }
+
+  return 'An unexpected error occurred. Please try again.';
+};

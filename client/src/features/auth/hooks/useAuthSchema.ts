@@ -15,7 +15,6 @@ const useAuthSchema = ({
       return [true, []];
     } catch (err) {
       if (err) {
-        console.log('schemaValidation err.errors', err.errors);
         setValidationErrors(err.errors);
       }
       return [false, err.errors || []];

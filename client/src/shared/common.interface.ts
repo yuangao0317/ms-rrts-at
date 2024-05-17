@@ -81,7 +81,7 @@ export interface IDropdownProps {
   dropdownClassNames?: string;
   showSearchInput?: boolean;
   style?: CSSProperties;
-  setValue?: Dispatch<SetStateAction<string>>;
+  setValue?: (item: string) => void;
   onClick?: (item: string) => void;
 }
 

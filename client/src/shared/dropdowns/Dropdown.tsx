@@ -73,7 +73,11 @@ const Dropdown: FC<IDropdownProps> = ({
             placeholder="Select Country"
             onChange={(event: ChangeEvent) => {
               const inputValue: string = (event.target as HTMLInputElement).value;
+              console.log('inputValue', inputValue);
               setInputText(inputValue);
+              if (setValue) {
+                setValue(inputValue);
+              }
               const filtered: string[] = _.filter(dropdownItems, (item: string) => item.toLowerCase().includes(inputValue.toLowerCase()));
               setDropdownItems(filtered);
               if (!inputValue) {
