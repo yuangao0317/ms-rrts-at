@@ -1,5 +1,6 @@
 import { authService } from '@gateway/services/api/auth.service';
 import { BadRequestError } from '@yuangao0317/ms-rrts-at-shared-common';
+import { BadGatewayError } from '@yuangao0317/ms-rrts-at-shared-common/src/error-handler';
 import { AxiosResponse } from 'axios';
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
@@ -15,7 +16,7 @@ export class SignUp {
       console.error(error.response, new BadRequestError(error.message, 'GatewayService SignUp.create method error'));
       res.status(StatusCodes.BAD_GATEWAY).json({
         message: 'Signup failed. Failed to connect to authorization service.',
-        error: new BadRequestError(error.message, 'GatewayService SignUp.create method error')
+        error: new BadGatewayError(error.message, 'GatewayService SignUp.create method error')
       });
     }
   }
