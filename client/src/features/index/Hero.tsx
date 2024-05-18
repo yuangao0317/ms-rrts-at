@@ -125,7 +125,7 @@ const Hero: FC = (): ReactElement => {
               ))}
             </div>
           </div>
-          <div className="-right-10 hidden lg:-mt-10 lg:flex animate__animated animate__zoomIn">
+          <div className="-right-10 hidden lg:-mt-10 xl:-mt-20 lg:flex animate__animated animate__zoomIn">
             <div className="relative">
               <img src="src/assets/images/hero-coop.png" className="relative hvr-grow" alt="" loading="lazy" />
             </div>

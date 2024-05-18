@@ -59,10 +59,10 @@ const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactEl
     try {
       const [isValid, recievedErrors]: [boolean, validationErrorsType[]] = await schemaValidation();
       if (isValid) {
-        console.log(userInfo);
+        console.log('userInfo payload', userInfo);
         const result: IResponse = await signUp(userInfo).unwrap();
 
-        console.log(result);
+        console.log('result', result);
       } else {
         setAlertMessage(Object.values(recievedErrors[0])[0] as string);
       }
@@ -74,6 +74,7 @@ const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactEl
         toastRef.current = toast.error(handleCatchFetchError(err));
       } else {
         console.error(err);
+        toastRef.current = toast.error(err.error);
       }
     }
   }, [schemaValidation, userInfo, signUp]);
