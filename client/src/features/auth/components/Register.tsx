@@ -17,6 +17,7 @@ import TextInput from 'src/shared/inputs/TextInput';
 import ModalContainer from 'src/shared/modals/ModalContainer';
 import { checkImage, readAsBase64 } from 'src/shared/utils/image.utils';
 import { countriesList, handleCatchFetchError, isApiResponseError } from 'src/shared/utils/utils.service';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
 const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactElement => {
   const [userInfo, setUserInfo] = useState<ISignUpPayload>({
@@ -68,12 +69,13 @@ const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactEl
       }
     } catch (err) {
       if (isApiResponseError(err)) {
+        console.error(err as FetchBaseQueryError);
         if (toastRef.current) {
           toast.dismiss(toastRef.current);
         }
         toastRef.current = toast.error(handleCatchFetchError(err));
       } else {
-        console.error(err);
+        console.error(err as FetchBaseQueryError);
         toastRef.current = toast.error(err.error);
       }
     }

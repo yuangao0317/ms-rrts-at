@@ -6,7 +6,6 @@ import { StatusCodes } from 'http-status-codes';
 
 export class SignUp {
   static async create(req: Request, res: Response): Promise<void> {
-    console.log('signup');
     try {
       const response: AxiosResponse = await authService.signUp(req.body);
       req.session = { jwt: response.data.token };
@@ -14,7 +13,10 @@ export class SignUp {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error(error.response, new BadRequestError(error.message, 'GatewayService SignUp.create method error'));
-      res.status(StatusCodes.BAD_GATEWAY).json({ message: 'Signup failed. Failed to connect to authorization service.' });
+      res.status(StatusCodes.BAD_GATEWAY).json({
+        message: 'Signup failed. Failed to connect to authorization service.',
+        error: new BadRequestError(error.message, 'GatewayService SignUp.create method error')
+      });
     }
   }
 }
