@@ -12,7 +12,10 @@ export class VerifyEmail {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error(error.response, new BadRequestError(error.message, 'GatewayService VerifyEmail.update method error'));
-      res.status(StatusCodes.BAD_GATEWAY).json({ message: 'Failed to verify email from authorization service.' });
+      res.status(StatusCodes.BAD_GATEWAY).json({
+        message: 'Failed to verify email from authorization service.',
+        error: new BadRequestError(error.message, 'GatewayService VerifyEmail.update method error')
+      });
     }
   }
 }
