@@ -72,11 +72,11 @@ function startElasticSearch(): void {
 
 function authErrorHandler(app: Application): void {
   app.use((error: IErrorResponse, _req: Request, res: Response, next: NextFunction) => {
-    console.error('error middleware: ', error);
-    log.log('error', `AuthService ${error.comingFrom}:`, error);
     if (error instanceof CustomError) {
+      log.log('error', `AuthService CustomError: ${error.comingFrom}:`, error);
       res.status(error.statusCode).json(error.serializeErrors());
     } else {
+      log.log('error', `AuthService Error: ${error.message}:`, error);
       res.status(500).json({
         status: 'error',
         message: 'Something went very wrong in Authorization Service!'

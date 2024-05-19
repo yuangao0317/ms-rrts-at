@@ -14,7 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "@elastic/elasticsearch": "^8.13.1",
-    "@yuangao0317/ms-rrts-at-shared-common": "^0.0.43",
+    "@yuangao0317/ms-rrts-at-shared-common": "^0.0.44",
     "amqplib": "^0.10.4",
     "bcrypt": "^5.1.1",
     "cloudinary": "^2.2.0",
