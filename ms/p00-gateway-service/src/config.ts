@@ -22,7 +22,7 @@ if (process.env.ENABLE_APM === '1') {
 
 class Config {
   public readonly NODE_ENV: string | undefined;
-  public readonly GATEWAY_JWT_TOKEN: string | undefined;
+  public readonly ENV_GATEWAY_TOKEN: string | undefined;
   public readonly JWT_TOKEN: string | undefined;
   public readonly SECRET_KEY_ONE: string | undefined;
   public readonly SECRET_KEY_TWO: string | undefined;
@@ -33,7 +33,7 @@ class Config {
 
   constructor() {
     this.NODE_ENV = process.env.NODE_ENV || '';
-    this.GATEWAY_JWT_TOKEN = process.env.GATEWAY_JWT_TOKEN || '1234';
+    this.ENV_GATEWAY_TOKEN = process.env.ENV_GATEWAY_TOKEN || '1234';
     this.JWT_TOKEN = process.env.JWT_TOKEN || '1234';
     this.SECRET_KEY_ONE = process.env.SECRET_KEY_ONE || '1234';
     this.SECRET_KEY_TWO = process.env.SECRET_KEY_TWO || '1234';

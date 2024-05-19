@@ -13,6 +13,7 @@ import { config } from '@gateway/config';
 import { appRoutes } from '@gateway/routes';
 import { elasticsearch } from '@gateway/elasticsearch';
 import { axiosAuthInstance } from '@gateway/services/api/auth.service';
+import { AxiosError } from 'axios';
 
 const SERVER_PORT = 4000;
 const log: Logger = winstonLogger(`${config.ELASTIC_SEARCH_URL}`, 'gatewayServer', 'debug');
@@ -91,8 +92,17 @@ export class GatewayServer {
     // error occurs
     app.use((error: IErrorResponse, _req: Request, res: Response, next: NextFunction) => {
       if (error instanceof CustomError) {
-        log.log('error', `GatewayService ${error.comingFrom}:`, error);
+        // error from throw
+        log.log('error', `GatewayService CustomError: ${error.comingFrom}:`, error);
         res.status(error.statusCode).json(error.serializeErrors());
+      } else if (error instanceof AxiosError) {
+        log.log('error', `GatewayService AxiosError: ${error.response?.data.message}:`, error.response);
+        res.status(error.response?.status as number).json({ status: 'error', message: `Gateway Error: ${error.response?.data.message}` });
+      } else {
+        res.status(500).json({
+          status: 'error',
+          message: 'Something went very wrong in Gateway Service!'
+        });
       }
       next();
     });
