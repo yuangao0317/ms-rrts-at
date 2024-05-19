@@ -32,8 +32,6 @@ export function isApiResponseError(error: unknown): error is ApiErrorResponse {
 export const handleCatchFetchError = (err: ApiErrorResponse): string => {
   if (err.status === 404) {
     return 'Request address not found.';
-  } else if (err.status === 400) {
-    return 'Bad Request.';
   } else {
     return err.data.message || 'An unexpected error occurred. Please try again.';
   }
