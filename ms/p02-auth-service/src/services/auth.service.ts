@@ -52,12 +52,12 @@ export async function getUserByEmail(email: string): Promise<IAuthDocument | und
   }
 }
 
-export async function updateProfilePicture(authId: number, profilePublicId: string, profilePicture: string): Promise<void> {
+export async function updateProfilePicture(authId: number, profilePublicId: string, profilePictureUrl: string): Promise<void> {
   try {
     await UserModel.update(
       {
         profilePublicId,
-        profilePicture
+        profilePicture: profilePictureUrl
       },
       { where: { id: authId } }
     );
@@ -107,6 +107,17 @@ export async function updateVerifyEmailField(authId: number, emailVerified: numb
           },
       { where: { id: authId } }
     );
+  } catch (error) {
+    log.error(error);
+  }
+}
+
+export async function deleteUserById(authId: number): Promise<void> {
+  try {
+    const user: Model = (await UserModel.findOne({ where: { id: authId } })) as Model;
+    if (user) {
+      await user.destroy();
+    }
   } catch (error) {
     log.error(error);
   }

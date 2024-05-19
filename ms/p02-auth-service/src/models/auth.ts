@@ -8,12 +8,15 @@ import { DataTypes, Model, ModelDefined, Optional } from 'sequelize';
 const SALT_ROUND = 10;
 
 interface UserModelInstanceMethods extends Model {
-    prototype: {
-      comparePassword: (password: string, hashedPassword: string) => Promise<boolean>;
-    }
-  }
+  prototype: {
+    comparePassword: (password: string, hashedPassword: string) => Promise<boolean>;
+  };
+}
 
-type AuthUserCreationAttributes = Optional<IAuthDocument, 'id' | 'createdAt' | 'passwordResetToken' | 'passwordResetExpires'>;
+type AuthUserCreationAttributes = Optional<
+  IAuthDocument,
+  'id' | 'createdAt' | 'passwordResetToken' | 'passwordResetExpires' | 'profilePicture'
+>;
 
 const UserModel: ModelDefined<IAuthDocument, AuthUserCreationAttributes> & UserModelInstanceMethods = sequelize.define(
   'Users',
@@ -40,7 +43,7 @@ const UserModel: ModelDefined<IAuthDocument, AuthUserCreationAttributes> & UserM
     },
     profilePicture: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -83,8 +86,8 @@ UserModel.addHook('beforeCreate', async (user: Model) => {
 });
 
 // Model instance methods
-UserModel.prototype.comparePassword = async function (password:string, hashedPassword: string): Promise<boolean> {
-    return compare(password, hashedPassword);
+UserModel.prototype.comparePassword = async function (password: string, hashedPassword: string): Promise<boolean> {
+  return compare(password, hashedPassword);
 };
 
 // https://sequelize.org/docs/v6/core-concepts/model-basics/#model-synchronization
