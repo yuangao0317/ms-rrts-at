@@ -89,8 +89,7 @@ export class GatewayServer {
       next();
     });
 
-    // error occurs
-    app.use((error: IErrorResponse, _req: Request, res: Response, next: NextFunction) => {
+    app.use((error: IErrorResponse, _req: Request, res: Response, _next: NextFunction) => {
       if (error instanceof CustomError) {
         // error from throw
         log.log('error', `GatewayService CustomError: ${error.comingFrom}:`, error);
@@ -99,12 +98,13 @@ export class GatewayServer {
         log.log('error', `GatewayService AxiosError: ${error.response?.data.message}:`, error.response);
         res.status(error.response?.status as number).json({ status: 'error', message: `Gateway Error: ${error.response?.data.message}` });
       } else {
+        log.log('error', `GatewayService Error: ${error.message}:`, error);
         res.status(500).json({
           status: 'error',
           message: 'Something went very wrong in Gateway Service!'
         });
       }
-      next();
+      // next();
     });
   }
 
