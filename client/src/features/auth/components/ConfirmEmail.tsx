@@ -20,9 +20,13 @@ const ConfirmEmail: FC = (): ReactElement => {
       setAlertMessage('Email verified successfully.');
       setStatus(AUTH_FETCH_STATUS.SUCCESS);
       dispatch(addAuthUser({ authInfo: result.user }));
-    } catch (error) {
+    } catch (err) {
       setStatus(AUTH_FETCH_STATUS.ERROR);
-      setAlertMessage(error?.data.message);
+      if ('data' in err) {
+        setAlertMessage(err?.data.message);
+      } else {
+        setAlertMessage(err?.error);
+      }
     }
   }, [dispatch, searchParams, verifyEmail]);
 
@@ -32,7 +36,8 @@ const ConfirmEmail: FC = (): ReactElement => {
 
   return (
     <div className="container mx-auto flex flex-col items-center justify-center px-6 py-8 mt-20 lg:py-0">
-      <div className="w-[30%]">
+      <h1 className="m-4 text-xl font-bold">Verify Email</h1>
+      <div className="min-w-[30%] max-w-max">
         <Alert type={status} message={alertMessage} />
       </div>
       <Link
