@@ -5,6 +5,8 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 import { useDispatch, useSelector } from 'react-redux';
 import { FLUSH, PAUSE, PERSIST, persistReducer, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import authReducer from 'src/features/auth/reducers/auth.reducer';
+import logoutReducer from 'src/features/auth/reducers/logout.reducer';
 
 import { api } from './api';
 
@@ -14,7 +16,9 @@ const persistConfig = {
   blacklist: ['clientApi', '_persist']
 };
 export const combineReducer = combineReducers({
-  [api.reducerPath]: api.reducer
+  [api.reducerPath]: api.reducer,
+  authUser: authReducer,
+  logout: logoutReducer
 });
 
 export type RootState = ReturnType<typeof combineReducer>;
