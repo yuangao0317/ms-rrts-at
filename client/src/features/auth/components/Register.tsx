@@ -6,6 +6,8 @@ import { FaCamera, FaChevronLeft, FaEye, FaEyeSlash, FaTimes } from 'react-icons
 import { Id, toast } from 'react-toastify';
 import { useAuthSchema } from 'src/features/auth/hooks/useAuthSchema';
 import { ISignUpPayload } from 'src/features/auth/interfaces/auth.interface';
+import { addAuthUser } from 'src/features/auth/reducers/auth.reducer';
+import { updateLogout } from 'src/features/auth/reducers/logout.reducer';
 import { registerUserSchema } from 'src/features/auth/schemas/auth.schema';
 import { useSignUpMutation } from 'src/features/auth/services/auth.service';
 import Alert from 'src/shared/alerts/Alert';
@@ -16,7 +18,8 @@ import Dropdown from 'src/shared/dropdowns/Dropdown';
 import TextInput from 'src/shared/inputs/TextInput';
 import ModalContainer from 'src/shared/modals/ModalContainer';
 import { checkImage, readAsBase64 } from 'src/shared/utils/image.utils';
-import { countriesList, handleCatchFetchError, isApiResponseError } from 'src/shared/utils/utils.service';
+import { countriesList, handleCatchFetchError, isApiResponseError, saveToSessionStorage } from 'src/shared/utils/utils.service';
+import { useAppDispatch } from 'src/store/store';
 
 const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactElement => {
   const [userInfo, setUserInfo] = useState<ISignUpPayload>({
@@ -33,6 +36,7 @@ const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactEl
   const [signUp, { error, isLoading }] = useSignUpMutation();
   const [alertMessage, setAlertMessage] = useState<string>('');
   const toastRef = useRef<Id | null>(null);
+  const dispatch = useAppDispatch();
 
   const [profileImage, setProfileImage] = useState<string>('https://placehold.co/330x220?text=Profile+Image');
   const [showImageSelect, setShowImageSelect] = useState<boolean>(false);
@@ -62,6 +66,10 @@ const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactEl
         const result: IResponse = await signUp(userInfo).unwrap();
 
         console.log('result', result);
+        setAlertMessage('');
+        dispatch(addAuthUser({ authInfo: result.user }));
+        dispatch(updateLogout(false));
+        saveToSessionStorage(JSON.stringify(true), JSON.stringify(result.user?.username));
       } else {
         setAlertMessage(Object.values(recievedErrors[0])[0] as string);
       }
@@ -76,7 +84,7 @@ const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactEl
         toastRef.current = toast.error(err.error);
       }
     }
-  }, [schemaValidation, userInfo, signUp]);
+  }, [schemaValidation, signUp, userInfo, dispatch]);
 
   const onHandleDropdownSelect = useCallback(
     (item: string) => {

@@ -58,3 +58,16 @@ export interface IUseAuthSchema {
   schema: ObjectSchema<ISignInPayload | ISignUpPayload>;
   userInfo: ISignInPayload | ISignUpPayload;
 }
+
+export interface IReduxAuthPayload {
+  authInfo?: IAuthDocument;
+}
+export interface IReduxAddAuthUser {
+  type: string;
+  payload: IReduxAuthPayload;
+}
+
+export interface IReduxLogout {
+  type: string;
+  payload: boolean;
+}

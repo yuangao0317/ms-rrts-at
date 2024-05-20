@@ -36,3 +36,10 @@ export const handleCatchFetchError = (err: ApiErrorResponse): string => {
     return err.data.message || 'An unexpected error occurred. Please try again.';
   }
 };
+export const saveToSessionStorage = (data: string, username: string): void => {
+  window.sessionStorage.setItem('isLoggedIn', data);
+  window.sessionStorage.setItem('loggedInuser', username);
+};
+export const saveToLocalStorage = (key: string, data: string): void => {
+  window.localStorage.setItem(key, data);
+};
