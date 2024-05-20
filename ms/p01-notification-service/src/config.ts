@@ -25,6 +25,7 @@ class Config {
   public readonly CLIENT_URL: string | undefined;
   public readonly RABBITMQ_ENDPOINT: string | undefined;
   public readonly ELASTIC_SEARCH_URL: string | undefined;
+  public readonly EMAIL_HOST: string | undefined;
   public readonly SENDER_EMAIL: string | undefined;
   public readonly SENDER_EMAIL_PASSWORD: string | undefined;
 
@@ -33,6 +34,7 @@ class Config {
     this.CLIENT_URL = process.env.CLIENT_URL || '';
     this.RABBITMQ_ENDPOINT = process.env.RABBITMQ_ENDPOINT || '';
     this.ELASTIC_SEARCH_URL = process.env.ELASTIC_SEARCH_URL || '';
+    this.EMAIL_HOST = process.env.EMAIL_HOST || '';
     this.SENDER_EMAIL = process.env.SENDER_EMAIL || '';
     this.SENDER_EMAIL_PASSWORD = process.env.SENDER_EMAIL_PASSWORD || '';
   }
