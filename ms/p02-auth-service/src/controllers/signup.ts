@@ -53,9 +53,9 @@ export async function create(req: Request, res: Response, _next: NextFunction): 
     }
     await updateProfilePicture(result.id!, result.profilePublicId!, uploadResult.secure_url);
 
-    const verificationLink = `${config.CLIENT_URL}/confirm_email?v_token=${userData.emailVerificationToken}`;
+    const verificationLink = `${config.CLIENT_URL}/confirm_email?v_token=${result.emailVerificationToken!}`;
     const messageDetails: IEmailMessageDetails = {
-      receiverEmail: result.email,
+      receiverEmail: result.email!,
       verifyLink: verificationLink,
       template: 'verifyEmail'
     };
