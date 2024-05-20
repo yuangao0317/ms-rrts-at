@@ -15,8 +15,10 @@ import PageToastAlert from 'src/shared/alerts/PageAlert';
 import Button from 'src/shared/buttons/Button';
 import { IModalContainerProps, IResponse, validationErrorsType } from 'src/shared/common.interface';
 import Dropdown from 'src/shared/dropdowns/Dropdown';
+import { updateHeader } from 'src/shared/headers/reducers/header.reducer';
 import TextInput from 'src/shared/inputs/TextInput';
 import ModalContainer from 'src/shared/modals/ModalContainer';
+import { headerValue } from 'src/shared/utils/constants';
 import { checkImage, readAsBase64 } from 'src/shared/utils/image.utils';
 import { countriesList, handleCatchFetchError, isApiResponseError, saveToSessionStorage } from 'src/shared/utils/utils.service';
 import { useAppDispatch } from 'src/store/store';
@@ -69,6 +71,7 @@ const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactEl
         setAlertMessage('');
         dispatch(addAuthUser({ authInfo: result.user }));
         dispatch(updateLogout(false));
+        dispatch(updateHeader(headerValue.home));
         saveToSessionStorage(JSON.stringify(true), JSON.stringify(result.user?.username));
       } else {
         setAlertMessage(Object.values(recievedErrors[0])[0] as string);

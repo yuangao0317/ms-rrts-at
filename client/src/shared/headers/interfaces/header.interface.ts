@@ -12,3 +12,8 @@ export interface INotification {
   hasUnreadMessage?: boolean;
   hasUnreadNotification?: boolean;
 }
+
+export interface IReduxHeader {
+  type: string;
+  payload: string;
+}

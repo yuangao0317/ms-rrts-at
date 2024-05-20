@@ -7,6 +7,7 @@ import { FLUSH, PAUSE, PERSIST, persistReducer, PURGE, REGISTER, REHYDRATE } fro
 import storage from 'redux-persist/lib/storage';
 import authReducer from 'src/features/auth/reducers/auth.reducer';
 import logoutReducer from 'src/features/auth/reducers/logout.reducer';
+import headerReducer from 'src/shared/headers/reducers/header.reducer';
 
 import { api } from './api';
 
@@ -17,6 +18,7 @@ const persistConfig = {
 };
 export const combineReducer = combineReducers({
   [api.reducerPath]: api.reducer,
+  header: headerReducer,
   authUser: authReducer,
   logout: logoutReducer
 });
