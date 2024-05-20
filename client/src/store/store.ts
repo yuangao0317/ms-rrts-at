@@ -11,11 +11,13 @@ import headerReducer from 'src/shared/headers/reducers/header.reducer';
 
 import { api } from './api';
 
+//!!! redux-persist-transform-encrypt
 const persistConfig = {
   key: 'root',
   storage: storage,
   blacklist: ['clientApi', '_persist']
 };
+
 export const combineReducer = combineReducers({
   [api.reducerPath]: api.reducer,
   header: headerReducer,

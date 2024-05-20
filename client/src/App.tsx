@@ -1,14 +1,18 @@
 import 'src/App.scss';
-import { FC, ReactElement } from 'react';
+
+import { FC, lazy, LazyExoticComponent, ReactElement, Suspense } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import AppRouter from 'src/AppRoutes';
+
+const AppRouter: LazyExoticComponent<FC> = lazy(() => import('src/AppRoutes'));
 
 const App: FC = (): ReactElement => {
   return (
     <>
       <BrowserRouter>
         <div className="w-screen min-h-screen flex flex-col relative">
-          <AppRouter />
+          <Suspense fallback={<h1>Loading App...</h1>}>
+            <AppRouter />
+          </Suspense>
         </div>
       </BrowserRouter>
     </>
