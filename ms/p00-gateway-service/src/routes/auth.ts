@@ -1,3 +1,4 @@
+import { Password } from '@gateway/controllers/auth/password';
 import { SignIn } from '@gateway/controllers/auth/signin';
 import { Signout } from '@gateway/controllers/auth/signout';
 import { SignUp } from '@gateway/controllers/auth/signup';
@@ -16,6 +17,7 @@ class AuthRoutes {
     this.router.post('/auth/signin', SignIn.read);
     this.router.post('/auth/signout', Signout.update);
     this.router.put('/auth/verify-email', VerifyEmail.update);
+    this.router.put('/auth/forgot-password', Password.forgotPassword);
 
     return this.router;
   }
