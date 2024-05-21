@@ -58,6 +58,16 @@ export const authApi = api.injectEndpoints({
     checkCurrentUserSession: builder.query<IResponse, void>({
       query: () => 'auth/currentuser',
       providesTags: ['Currentuser']
+    }),
+    forgotPassword: builder.mutation<IResponse, string>({
+      query(email: string) {
+        return {
+          url: 'auth/forgot-password',
+          method: 'PUT',
+          body: { email }
+        };
+      },
+      invalidatesTags: ['Auth']
     })
   })
 });
@@ -68,5 +78,6 @@ export const {
   useLogoutMutation,
   useResendEmailMutation,
   useVerifyEmailMutation,
-  useCheckCurrentUserSessionQuery
+  useCheckCurrentUserSessionQuery,
+  useForgotPasswordMutation
 } = authApi;
