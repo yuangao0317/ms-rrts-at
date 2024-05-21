@@ -5,7 +5,7 @@ const loginUserSchema: ObjectSchema<ISignInPayload> = object({
   username: string()
     .required({ username: 'Username is a required field' })
     .min(6, { username: 'Invalid username' })
-    .max(18, { username: 'Invalid username' }),
+    .max(28, { username: 'Invalid username' }),
   password: string()
     .required({ password: 'Password is a required field' })
     .min(8, { password: 'Invalid password' })
@@ -18,7 +18,7 @@ const registerUserSchema: ObjectSchema<ISignUpPayload> = object({
   username: string()
     .required({ username: 'Username is a required field' })
     .min(6, { username: 'Username must contain at least 6 characters' })
-    .max(18, { username: 'Username must contain less than 18 characters' }),
+    .max(28, { username: 'Username must contain less than 28 characters' }),
   password: string()
     .required({ password: 'Password is a required field' })
     .min(8, { password: 'Password must contain at least 8 characters' })
