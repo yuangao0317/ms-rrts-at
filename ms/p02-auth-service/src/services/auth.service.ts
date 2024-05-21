@@ -123,6 +123,20 @@ export async function deleteUserById(authId: number): Promise<void> {
   }
 }
 
+export async function updatePasswordToken(authId: number, token: string, tokenExpiration: Date): Promise<void> {
+  try {
+    await UserModel.update(
+      {
+        passwordResetToken: token,
+        passwordResetExpires: tokenExpiration
+      },
+      { where: { id: authId } }
+    );
+  } catch (error) {
+    log.error(error);
+  }
+}
+
 export function signToken(id: number, email: string, username: string): string {
   return sign(
     {
