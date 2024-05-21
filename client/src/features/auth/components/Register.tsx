@@ -1,7 +1,7 @@
 import 'react-toastify/dist/ReactToastify.css';
 
 import classNames from 'classnames';
-import { ChangeEvent, FC, ReactElement, useCallback, useRef, useState } from 'react';
+import { ChangeEvent, FC, ReactElement, useCallback, useMemo, useRef, useState } from 'react';
 import { FaCamera, FaChevronLeft, FaEye, FaEyeSlash, FaTimes } from 'react-icons/fa';
 import { Id, toast } from 'react-toastify';
 import { useAuthSchema } from 'src/features/auth/hooks/useAuthSchema';
@@ -112,17 +112,17 @@ const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactEl
     });
     setAlertMessage('');
   };
-  const buttonClassNames = (): string => {
+  const buttonClassNames = useMemo((): string => {
     const isDisabled = !userInfo.country || !userInfo.profilePicture;
     return classNames('text-md block w-full rounded px-8 py-2 text-center font-bold text-white focus:outline-none', {
       'bg-sky-500 cursor-pointer hover:bg-sky-400': !isDisabled,
       'bg-gray-400 cursor-not-allowed hover:bg-gray-400': isDisabled
     });
-  };
+  }, [userInfo.country, userInfo.profilePicture]);
 
   return (
     <>
-      <PageToastAlert />
+      {/* <PageToastAlert /> */}
       <ModalContainer>
         <div className="relative top-[10%] mx-auto w-11/12 max-w-md rounded bg-white md:w-2/3">
           <div className="relative px-5 py-5">
@@ -288,7 +288,7 @@ const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactEl
               </div>
               <Button
                 disabled={!userInfo.country || !userInfo.profilePicture}
-                className={buttonClassNames()}
+                className={buttonClassNames}
                 label={`${isLoading ? 'SIGNUP IN PROGRESS...' : 'SIGNUP'}`}
                 onClick={onRegisterUser}
               />

@@ -4,6 +4,7 @@ import AppPage from 'src/features/AppPage';
 import Home from 'src/features/home/home';
 
 const ConfirmEmail: LazyExoticComponent<FC> = lazy(() => import('src/features/auth/components/ConfirmEmail'));
+const ResetPassword: LazyExoticComponent<FC> = lazy(() => import('src/features/auth/components/ResetPassword'));
 
 const AppRouter: FC = () => {
   const routes: RouteObject[] = [
@@ -20,6 +21,14 @@ const AppRouter: FC = () => {
       element: (
         <Suspense fallback={<div>Loading...</div>}>
           <ConfirmEmail />
+        </Suspense>
+      )
+    },
+    {
+      path: 'reset_password',
+      element: (
+        <Suspense fallback={<div>Loading...</div>}>
+          <ResetPassword />
         </Suspense>
       )
     }

@@ -1,5 +1,5 @@
-import { ISignInPayload, ISignUpPayload } from 'src/features/auth/interfaces/auth.interface';
-import { object, ObjectSchema, string } from 'yup';
+import { IResetPasswordPayload, ISignInPayload, ISignUpPayload } from 'src/features/auth/interfaces/auth.interface';
+import { object, ObjectSchema, ref, string } from 'yup';
 
 const loginUserSchema: ObjectSchema<ISignInPayload> = object({
   username: string()
@@ -30,4 +30,16 @@ const registerUserSchema: ObjectSchema<ISignUpPayload> = object({
   deviceType: string().optional().nullable().notRequired()
 });
 
-export { loginUserSchema, registerUserSchema };
+const resetPasswordSchema: ObjectSchema<IResetPasswordPayload> = object({
+  password: string()
+    .required({ password: 'Password is a required field' })
+    .min(8, { password: 'Password must contain at least 8 characters' })
+    .max(18, { password: 'Password must contain less than 18 characters' }),
+  confirmPassword: string()
+    .required({ confirmPassword: 'Confirm password is a required field' })
+    .min(8, { password: 'Confirm password is invalid' })
+    .max(18, { password: 'Confirm password is invalid' })
+    .oneOf([ref('password')], 'Passwords do not match')
+});
+
+export { loginUserSchema, registerUserSchema, resetPasswordSchema };

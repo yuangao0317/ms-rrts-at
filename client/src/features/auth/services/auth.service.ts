@@ -68,6 +68,16 @@ export const authApi = api.injectEndpoints({
         };
       },
       invalidatesTags: ['Auth']
+    }),
+    resetPassword: builder.mutation<IResponse, { password: string; confirmPassword: string; token: string }>({
+      query(data) {
+        return {
+          url: `auth/reset-password/${data.token}`,
+          method: 'PUT',
+          body: data
+        };
+      },
+      invalidatesTags: ['Auth']
     })
   })
 });
@@ -79,5 +89,6 @@ export const {
   useResendEmailMutation,
   useVerifyEmailMutation,
   useCheckCurrentUserSessionQuery,
-  useForgotPasswordMutation
+  useForgotPasswordMutation,
+  useResetPasswordMutation
 } = authApi;

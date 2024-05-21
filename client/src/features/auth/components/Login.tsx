@@ -65,7 +65,7 @@ const LoginModal: FC<IModalContainerProps> = ({ onClose, onToggle, onTogglePassw
 
   return (
     <>
-      <PageToastAlert />
+      {/* <PageToastAlert /> */}
       <ModalContainer>
         <div className="relative top-[20%] mx-auto w-11/12 max-w-md rounded-lg bg-white md:w-2/3">
           <div className="relative px-5 py-5">
