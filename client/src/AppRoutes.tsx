@@ -1,8 +1,9 @@
-import { FC } from 'react';
+import { FC, lazy, LazyExoticComponent, Suspense } from 'react';
 import { RouteObject, useRoutes } from 'react-router-dom';
 import AppPage from 'src/features/AppPage';
-import ConfirmEmail from 'src/features/auth/components/ConfirmEmail';
 import Home from 'src/features/home/home';
+
+const ConfirmEmail: LazyExoticComponent<FC> = lazy(() => import('src/features/auth/components/ConfirmEmail'));
 
 const AppRouter: FC = () => {
   const routes: RouteObject[] = [
@@ -16,7 +17,11 @@ const AppRouter: FC = () => {
     },
     {
       path: 'confirm_email',
-      element: <ConfirmEmail />
+      element: (
+        <Suspense fallback={<div>Loading...</div>}>
+          <ConfirmEmail />
+        </Suspense>
+      )
     }
   ];
 
