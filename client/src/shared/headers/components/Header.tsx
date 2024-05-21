@@ -6,6 +6,9 @@ import { IHeader, IHeaderModalProps } from 'src/shared/headers/interfaces/header
 const Button: LazyExoticComponent<FC<IButtonProps>> = lazy(() => import('src/shared/buttons/Button'));
 const LoginModal: LazyExoticComponent<FC<IModalContainerProps>> = lazy(() => import('src/features/auth/components/Login'));
 const RegisterModal: LazyExoticComponent<FC<IModalContainerProps>> = lazy(() => import('src/features/auth/components/Register'));
+const ForgotPasswordModal: LazyExoticComponent<FC<IModalContainerProps>> = lazy(
+  () => import('src/features/auth/components/ForgotPassword')
+);
 
 const Header: FC<IHeader> = ({ navClass }): ReactElement => {
   const [showModal, setShowModal] = useState<IHeaderModalProps>({
@@ -28,6 +31,12 @@ const Header: FC<IHeader> = ({ navClass }): ReactElement => {
           <RegisterModal
             onClose={() => setShowModal((item: IHeaderModalProps) => ({ ...item, register: false }))}
             onToggle={() => setShowModal((item: IHeaderModalProps) => ({ ...item, login: true, register: false }))}
+          />
+        )}
+        {showModal.forgotPassword && (
+          <ForgotPasswordModal
+            onClose={() => setShowModal((item: IHeaderModalProps) => ({ ...item, forgotPassword: false }))}
+            onToggle={() => setShowModal((item: IHeaderModalProps) => ({ ...item, login: true, forgotPassword: false }))}
           />
         )}
       </Suspense>
