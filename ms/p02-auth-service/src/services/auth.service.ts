@@ -137,6 +137,34 @@ export async function updatePasswordToken(authId: number, token: string, tokenEx
   }
 }
 
+export async function getAuthUserByPasswordToken(token: string): Promise<IAuthDocument | undefined> {
+  try {
+    const user: Model = (await UserModel.findOne({
+      where: {
+        [Op.and]: [{ passwordResetToken: token }, { passwordResetExpires: { [Op.gt]: new Date() } }]
+      }
+    })) as Model;
+    return user?.dataValues;
+  } catch (error) {
+    log.error(error);
+  }
+}
+
+export async function updatePassword(authId: number, hashedPassword: string): Promise<void> {
+  try {
+    await UserModel.update(
+      {
+        password: hashedPassword,
+        passwordResetToken: '',
+        passwordResetExpires: new Date()
+      },
+      { where: { id: authId } }
+    );
+  } catch (error) {
+    log.error(error);
+  }
+}
+
 export function signToken(id: number, email: string, username: string): string {
   return sign(
     {

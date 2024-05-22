@@ -10,6 +10,7 @@ const SALT_ROUND = 10;
 interface UserModelInstanceMethods extends Model {
   prototype: {
     comparePassword: (password: string, hashedPassword: string) => Promise<boolean>;
+    hashPassword: (password: string) => Promise<string>;
   };
 }
 
@@ -88,6 +89,10 @@ UserModel.addHook('beforeCreate', async (user: Model) => {
 // Model instance methods
 UserModel.prototype.comparePassword = async function (password: string, hashedPassword: string): Promise<boolean> {
   return compare(password, hashedPassword);
+};
+
+UserModel.prototype.hashPassword = async function (password: string): Promise<string> {
+  return hash(password, SALT_ROUND);
 };
 
 // https://sequelize.org/docs/v6/core-concepts/model-basics/#model-synchronization

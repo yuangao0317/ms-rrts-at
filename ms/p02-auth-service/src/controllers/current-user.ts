@@ -12,6 +12,9 @@ export async function read(req: Request, res: Response): Promise<void> {
   let user = null;
   // req.currentUser is verified in api gateway from session data
   const existingUser: IAuthDocument | undefined = await getAuthUserById(req.currentUser!.id);
+  if (!existingUser) {
+    throw new BadRequestError('User does not exist', 'CurrentUser read() method error');
+  }
   if (existingUser && Object.keys(existingUser).length) {
     user = existingUser;
   }
