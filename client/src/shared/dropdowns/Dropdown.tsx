@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { ChangeEvent, FC, MouseEvent, ReactElement, useCallback, useRef, useState } from 'react';
+import { ChangeEvent, FC, MouseEvent, ReactElement, useCallback, useState } from 'react';
 import { FaChevronDown, FaChevronUp, FaTimes } from 'react-icons/fa';
 import { v4 as uuidv4 } from 'uuid';
 
