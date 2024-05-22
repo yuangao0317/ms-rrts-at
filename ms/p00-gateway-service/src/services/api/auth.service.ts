@@ -48,6 +48,11 @@ class AuthService {
     const response: AxiosResponse = await this.axiosService.axios.put('/forgot-password', { email });
     return response;
   }
+
+  async resetPassword(token: string, password: string, confirmPassword: string): Promise<AxiosResponse> {
+    const response: AxiosResponse = await this.axiosService.axios.put(`/reset-password/${token}`, { password, confirmPassword });
+    return response;
+  }
 }
 
 export const authService: AuthService = new AuthService();
