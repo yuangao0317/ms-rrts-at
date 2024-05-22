@@ -12,11 +12,11 @@ export const AUTH_FETCH_STATUS = {
 export const categories = (): string[] => {
   return [
     'Graphics & Design',
+    'Programming & Tech',
     'Digital Marketing',
-    'Writing & Translation',
     'Video & Animation',
     'Music & Audio',
-    'Programming & Tech',
+    'Writing & Translation',
     'Photography',
     'Data',
     'Business'
