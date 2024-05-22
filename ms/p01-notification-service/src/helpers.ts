@@ -39,13 +39,13 @@ async function emailTemplates(template: string, receiver: string, locals: IEmail
         }
       }
     });
-
     await email.send({
       template: path.join(__dirname, '..', 'src/emails', template),
       message: { to: receiver },
       locals
     });
   } catch (error) {
+    console.log(error);
     log.error(error);
   }
 }
