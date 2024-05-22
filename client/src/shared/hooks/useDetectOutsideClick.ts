@@ -1,31 +1,25 @@
-import { Dispatch, MutableRefObject, SetStateAction, useCallback, useEffect, useState } from 'react';
+import { Dispatch, MutableRefObject, SetStateAction, useEffect, useRef, useState } from 'react';
 
-const useDetectOutsideClick = (
-  ref: MutableRefObject<HTMLDivElement | null>,
-  initialState: boolean
-): [boolean, Dispatch<SetStateAction<boolean>>] => {
-  const [isActive, setIsActive] = useState<boolean>(initialState);
+type UseDetectOutsideClickReturn<T> = [MutableRefObject<T | null>, boolean, Dispatch<SetStateAction<boolean>>];
 
-  const handleClick = useCallback(
-    (event: MouseEvent): void => {
-      if (ref.current !== null && !ref.current.contains(event.target as Node)) {
-        setIsActive(!isActive);
-      }
-    },
-    [isActive, ref]
-  );
+function useDetectOutsideClick<T extends HTMLElement>(initialState: boolean): UseDetectOutsideClickReturn<T> {
+  const [isActive, setIsActive] = useState(initialState);
+  const ref = useRef<T | null>(null);
 
   useEffect(() => {
-    if (isActive) {
-      window.addEventListener('click', handleClick);
-    }
-
-    return () => {
-      window.removeEventListener('click', handleClick);
+    const handleClickOutside = (event: MouseEvent) => {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setIsActive(false);
+      }
     };
-  }, [isActive, handleClick]);
 
-  return [isActive, setIsActive];
-};
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  return [ref, isActive, setIsActive];
+}
 
 export default useDetectOutsideClick;

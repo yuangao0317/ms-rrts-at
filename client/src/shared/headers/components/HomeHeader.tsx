@@ -1,5 +1,5 @@
 import { Transition } from '@headlessui/react';
-import { FC, ReactElement, useRef, useState } from 'react';
+import { FC, ReactElement, useCallback, useRef, useState } from 'react';
 import { FaAngleLeft, FaAngleRight, FaBars, FaRegBell, FaRegEnvelope, FaTimes } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { Id, toast } from 'react-toastify';
@@ -24,8 +24,8 @@ const HomeHeader: FC<IHomeHeaderProps> = ({ showCategoryContainer }): ReactEleme
   const logout = useAppSelector((state: IReduxState) => state.logout);
 
   const [openSidebar, setOpenSidebar] = useState<boolean>(false);
-  const settingsDropdownRef = useRef<HTMLDivElement | null>(null);
-  const [isSettingsDropdown, setIsSettingsDropdown] = useDetectOutsideClick(settingsDropdownRef, false);
+  // const settingsDropdownRef = useRef<HTMLDivElement | null>(null);
+  const [settingsDropdownRef, isSettingsDropdown, setIsSettingsDropdown] = useDetectOutsideClick<HTMLDivElement>(false);
   const navElement = useRef<HTMLDivElement | null>(null);
 
   const [resendEmail] = useResendEmailMutation();
@@ -46,9 +46,9 @@ const HomeHeader: FC<IHomeHeaderProps> = ({ showCategoryContainer }): ReactEleme
     }
   };
 
-  const toggleDropdown = (): void => {
+  const toggleDropdown = useCallback((): void => {
     setIsSettingsDropdown(!isSettingsDropdown);
-  };
+  }, [isSettingsDropdown, setIsSettingsDropdown]);
 
   const slideLeft = (): void => {
     if (navElement.current) {
@@ -157,7 +157,7 @@ const HomeHeader: FC<IHomeHeaderProps> = ({ showCategoryContainer }): ReactEleme
                         leaveFrom="opacity-100 translate-y-0"
                         leaveTo="opacity-0 translate-y-1"
                       >
-                        <div className="absolute -right-48 z-50 mt-5 w-96">
+                        <div className="absolute top-10 left-4 z-50 w-96">
                           <SettingsDropdown authUser={authUser} setIsDropdownOpen={setIsSettingsDropdown} />
                         </div>
                       </Transition>

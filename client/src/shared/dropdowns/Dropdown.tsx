@@ -21,8 +21,8 @@ const Dropdown: FC<IDropdownProps> = ({
 }): ReactElement => {
   const [dropdownItems, setDropdownItems] = useState<string[]>(items);
   const [inputText, setInputText] = useState<string>(text);
-  const dropdownRef = useRef<HTMLDivElement | null>(null);
-  const [toggleDropdown, setToggleDropdown] = useDetectOutsideClick(dropdownRef, false);
+  // const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const [dropdownRef, toggleDropdown, setToggleDropdown] = useDetectOutsideClick<HTMLDivElement>(false);
 
   const onHandleSelect = useCallback(
     (event: MouseEvent): void => {
@@ -45,7 +45,7 @@ const Dropdown: FC<IDropdownProps> = ({
   const handleBlur = () => {};
 
   return (
-    <div className={`w-full divide-y divide-gray-100 rounded border ${mainClassNames}`} style={style}>
+    <div ref={dropdownRef} className={`w-full divide-y divide-gray-100 rounded border ${mainClassNames}`} style={style}>
       {(!showSearchInput || showSearchInput) && !toggleDropdown && (
         <Button
           className="bg-teal flex w-full justify-between rounded px-3 py-2 text-white"

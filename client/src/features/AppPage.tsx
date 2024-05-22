@@ -7,6 +7,7 @@ import { useCheckCurrentUserSessionQuery } from 'src/features/auth/services/auth
 import Home from 'src/features/home/home';
 import Index from 'src/features/index';
 import PageToastAlert from 'src/shared/alerts/PageAlert';
+import HomeHeader from 'src/shared/headers/components/HomeHeader';
 import { updateHeader } from 'src/shared/headers/reducers/header.reducer';
 import { headerValue } from 'src/shared/utils/constants';
 import { applicationLogout, saveToSessionStorage } from 'src/shared/utils/utils.service';
@@ -16,6 +17,7 @@ import { IReduxState } from 'src/store/store.interface';
 const AppPage: FC = (): ReactElement => {
   const authUser: IAuthUser = useAppSelector((state: IReduxState) => state.authUser);
   const appLogout = useAppSelector((state: IReduxState) => state.logout);
+  const showCategoryContainer = useAppSelector((state: IReduxState) => state.showCategoryContainer);
   // conditional fetching:
   // When skip is true, the cached data will not be used on the initial load, and will ignore updates from any identical query until the skip condition is removed
   // skip: true will force to fetch instead of using cache
@@ -62,6 +64,7 @@ const AppPage: FC = (): ReactElement => {
     ) : (
       <>
         <PageToastAlert />
+        <HomeHeader showCategoryContainer={showCategoryContainer} />
         <Home />
       </>
     );
