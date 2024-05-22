@@ -37,9 +37,9 @@ const resetPasswordSchema: ObjectSchema<IResetPasswordPayload> = object({
     .max(18, { password: 'Password must contain less than 18 characters' }),
   confirmPassword: string()
     .required({ confirmPassword: 'Confirm password is a required field' })
-    .min(8, { password: 'Confirm password is invalid' })
-    .max(18, { password: 'Confirm password is invalid' })
-    .oneOf([ref('password')], 'Passwords do not match')
+    .min(8, { confirmPassword: 'Confirm password is invalid' })
+    .max(18, { confirmPassword: 'Confirm password is invalid' })
+    .oneOf([ref('password')], { confirmPassword: 'Passwords do not match' })
 });
 
 export { loginUserSchema, registerUserSchema, resetPasswordSchema };

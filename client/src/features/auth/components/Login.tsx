@@ -9,7 +9,6 @@ import { updateLogout } from 'src/features/auth/reducers/logout.reducer';
 import { loginUserSchema } from 'src/features/auth/schemas/auth.schema';
 import { useSignInMutation } from 'src/features/auth/services/auth.service';
 import Alert from 'src/shared/alerts/Alert';
-import PageToastAlert from 'src/shared/alerts/PageAlert';
 import Button from 'src/shared/buttons/Button';
 import { IModalContainerProps, IResponse, validationErrorsType } from 'src/shared/common.interface';
 import { updateHeader } from 'src/shared/headers/reducers/header.reducer';
@@ -50,8 +49,8 @@ const LoginModal: FC<IModalContainerProps> = ({ onClose, onToggle, onTogglePassw
         setAlertMessage(Object.values(recievedErrors[0])[0] as string);
       }
     } catch (err) {
-      // setAlertMessage(error?.data.message);
       console.log('err', err);
+      setAlertMessage('');
       if (isApiResponseError(err)) {
         if (toastRef.current) {
           toast.dismiss(toastRef.current);
@@ -65,7 +64,6 @@ const LoginModal: FC<IModalContainerProps> = ({ onClose, onToggle, onTogglePassw
 
   return (
     <>
-      {/* <PageToastAlert /> */}
       <ModalContainer>
         <div className="relative top-[20%] mx-auto w-11/12 max-w-md rounded-lg bg-white md:w-2/3">
           <div className="relative px-5 py-5">

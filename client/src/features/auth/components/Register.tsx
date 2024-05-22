@@ -1,4 +1,4 @@
-import 'react-toastify/dist/ReactToastify.css';
+// import 'react-toastify/dist/ReactToastify.css';
 
 import classNames from 'classnames';
 import { ChangeEvent, FC, ReactElement, useCallback, useMemo, useRef, useState } from 'react';
@@ -11,7 +11,6 @@ import { updateLogout } from 'src/features/auth/reducers/logout.reducer';
 import { registerUserSchema } from 'src/features/auth/schemas/auth.schema';
 import { useSignUpMutation } from 'src/features/auth/services/auth.service';
 import Alert from 'src/shared/alerts/Alert';
-import PageToastAlert from 'src/shared/alerts/PageAlert';
 import Button from 'src/shared/buttons/Button';
 import { IModalContainerProps, IResponse, validationErrorsType } from 'src/shared/common.interface';
 import Dropdown from 'src/shared/dropdowns/Dropdown';
@@ -122,7 +121,6 @@ const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactEl
 
   return (
     <>
-      {/* <PageToastAlert /> */}
       <ModalContainer>
         <div className="relative top-[10%] mx-auto w-11/12 max-w-md rounded bg-white md:w-2/3">
           <div className="relative px-5 py-5">

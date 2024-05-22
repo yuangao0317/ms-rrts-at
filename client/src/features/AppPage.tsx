@@ -6,6 +6,7 @@ import { updateLogout } from 'src/features/auth/reducers/logout.reducer';
 import { useCheckCurrentUserSessionQuery } from 'src/features/auth/services/auth.service';
 import Home from 'src/features/home/home';
 import Index from 'src/features/index';
+import PageToastAlert from 'src/shared/alerts/PageAlert';
 import { updateHeader } from 'src/shared/headers/reducers/header.reducer';
 import { headerValue } from 'src/shared/utils/constants';
 import { applicationLogout, saveToSessionStorage } from 'src/shared/utils/utils.service';
@@ -54,14 +55,23 @@ const AppPage: FC = (): ReactElement => {
 
   if (authUser) {
     return !isSessionValid && !authUser.id ? (
-      <Index />
+      <>
+        <PageToastAlert />
+        <Index />
+      </>
     ) : (
       <>
+        <PageToastAlert />
         <Home />
       </>
     );
   } else {
-    return <Index />;
+    return (
+      <>
+        <PageToastAlert />
+        <Index />
+      </>
+    );
   }
 };
 

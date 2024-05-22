@@ -1,3 +1,5 @@
+import 'react-toastify/dist/ReactToastify.css';
+
 import { memo } from 'react';
 import { ToastContainer } from 'react-toastify';
 

@@ -6,6 +6,7 @@ import { useAuthSchema } from 'src/features/auth/hooks/useAuthSchema';
 import { IResetPasswordPayload } from 'src/features/auth/interfaces/auth.interface';
 import { resetPasswordSchema } from 'src/features/auth/schemas/auth.schema';
 import { useResetPasswordMutation } from 'src/features/auth/services/auth.service';
+import PageToastAlert from 'src/shared/alerts/PageAlert';
 import Button from 'src/shared/buttons/Button';
 import { IResponse, validationErrorsType } from 'src/shared/common.interface';
 import Header from 'src/shared/headers/components/Header';
@@ -15,13 +16,14 @@ import { handleCatchFetchError, isApiResponseError } from 'src/shared/utils/util
 
 const Alert = lazy(() => import('src/shared/alerts/Alert'));
 
+const initResetPasswordPayload: IResetPasswordPayload = {
+  password: '',
+  confirmPassword: ''
+};
 const ResetPassword: FC = (): ReactElement => {
   const [searchParams] = useSearchParams({});
   const toastRef = useRef<Id | null>(null);
-  const [userInfo, setUserInfo] = useState<IResetPasswordPayload>({
-    password: '',
-    confirmPassword: ''
-  });
+  const [userInfo, setUserInfo] = useState<IResetPasswordPayload>(initResetPasswordPayload);
   const [alertMessage, setAlertMessage] = useState<string>('');
   const [status, setStatus] = useState<string>(AUTH_FETCH_STATUS.IDLE);
   const [schemaValidation] = useAuthSchema({ schema: resetPasswordSchema, userInfo });
@@ -39,13 +41,13 @@ const ResetPassword: FC = (): ReactElement => {
         }).unwrap();
         setAlertMessage(`${result.message}`);
         setStatus(AUTH_FETCH_STATUS.SUCCESS);
-        setUserInfo({ password: '', confirmPassword: '' });
+        setUserInfo(initResetPasswordPayload);
       } else {
         setStatus(AUTH_FETCH_STATUS.ERROR);
         setAlertMessage(Object.values(recievedErrors[0])[0] as string);
       }
     } catch (err) {
-      console.log('err', err);
+      console.log('err', isApiResponseError(err));
       if (isApiResponseError(err)) {
         if (toastRef.current) {
           toast.dismiss(toastRef.current);
@@ -67,6 +69,7 @@ const ResetPassword: FC = (): ReactElement => {
 
   return (
     <>
+      <PageToastAlert />
       <Header navClass="navbar peer-checked:navbar-active fixed z-20 w-full border-b border-gray-100 bg-white/90 shadow-2xl shadow-gray-600/5 backdrop-blur dark:border-gray-800 dark:bg-gray-900/80 dark:shadow-none" />
       <div className="relative mt-24 mx-auto w-11/12 max-w-md rounded-lg bg-white md:w-2/3">
         <div className="relative px-5 py-5">
