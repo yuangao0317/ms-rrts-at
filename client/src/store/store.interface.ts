@@ -4,4 +4,5 @@ export interface IReduxState {
   header: string;
   authUser: IAuthUser;
   logout: boolean;
+  showCategoryContainer: boolean;
 }

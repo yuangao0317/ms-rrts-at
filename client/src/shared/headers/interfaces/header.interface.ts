@@ -1,3 +1,6 @@
+import { Dispatch, SetStateAction } from 'react';
+import { IAuthUser } from 'src/features/auth/interfaces/auth.interface';
+
 export interface IHeader {
   navClass: string;
 }
@@ -16,4 +19,15 @@ export interface INotification {
 export interface IReduxHeader {
   type: string;
   payload: string;
+}
+
+export interface IReduxShowCategory {
+  type: string;
+  payload: boolean;
+}
+
+export interface IHomeHeaderProps {
+  authUser?: IAuthUser;
+  showCategoryContainer?: boolean;
+  setIsDropdownOpen?: Dispatch<SetStateAction<boolean>>;
 }

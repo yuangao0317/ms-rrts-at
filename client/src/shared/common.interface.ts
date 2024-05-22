@@ -85,4 +85,13 @@ export interface IDropdownProps {
   onClick?: (item: string) => void;
 }
 
+// Banners
+export interface IBannerProps {
+  bgColor: string;
+  text: string;
+  showLink: boolean;
+  linkText?: string;
+  onClick?: () => void;
+}
+
 export type validationErrorsType = ISignInPayload | ISignUpPayload;
