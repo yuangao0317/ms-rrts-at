@@ -1,4 +1,7 @@
 ﻿# ms-rrts-at  
+## About  
+Containerized Microservices Application.  
+
 ### (In Development)   
 | Service | Status |
 | :--- | :---: |
@@ -7,9 +10,6 @@
 | Notification Service - Auth  | Done |
 | Auth Service - Auth  | Done |
 | ElasticSearch(local) - Kibana  | Done |
-
-## About  
-Containerized Microservices Application.  
 
 ### Tech Stack  
 React, NodeJS, Typescript, Kubernetes/Docker, Rabbitmq, Redis, MySQL, PostgreSQL, MongoDB, SocketIO, Minikube, AWS EKS, Tailwind, Express, RTK Query, Elastic Stack, Jenkins, Prometheus/Grafana, JWT Auth, OTP Auth, API Gateway, and more!  
