@@ -76,7 +76,7 @@ const Hero: FC = (): ReactElement => {
         </h3>
         <h1 className="text-center text-4xl font-black text-blue-900 dark:text-white sm:mx-auto sm:w-10/12 sm:text-5xl md:w-10/12 md:text-5xl lg:w-auto lg:text-left  animate__animated animate__fadeInDown">
           Hire top-notch freelance experts <br className="hidden lg:block" />{' '}
-          <span className="relative bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent dark:from-blue-400 dark:to-cyan-300">
+          <span className="relative bg-gradient-to-r from-blue-600 via-blue-400 to-cyan-500 bg-clip-text text-transparent dark:from-blue-400 dark:to-cyan-300">
             to elevate your projects
           </span>
           .
