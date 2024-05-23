@@ -1,5 +1,9 @@
 # docker compose -f docker-compose-volumes.yaml up -d redis mongodb mysql postgres rabbitmq
 version: "3.9"
+networks:
+  volumes_net:
+
+
 services:
   redis:
     container_name: redis_container
@@ -10,6 +14,8 @@ services:
     command: redis-server --loglevel warning
     volumes:
       - ./docker-volumes/redis-cache:/data
+    networks:
+      - volumes_net
 
   mongodb:
     container_name: mongodb_container
@@ -19,6 +25,8 @@ services:
       - "27017:27017"
     volumes:
       - ./docker-volumes/mongodb-data:/data/db
+    networks:
+      - volumes_net
 
   mysql:
     container_name: mysql_container
@@ -36,6 +44,8 @@ services:
       - "3306:3306"
     volumes:
       - ./docker-volumes/mysql-data:/var/lib/mysql
+    networks:
+      - volumes_net
 
   postgres:
     container_name: postgres_container
@@ -49,16 +59,20 @@ services:
       - "5432:5432"
     volumes:
       - ./docker-volumes/postgres-data:/var/lib/postgresql
+    networks:
+      - volumes_net
 
   rabbitmq:
     container_name: rabbitmq_container
     image: rabbitmq:3.13-rc-management-alpine
     restart: always
     environment:
-      - RABBITMQ_DEFAULT_USER=jobber
-      - RABBITMQ_DEFAULT_PASS=jobberpass
+      - RABBITMQ_DEFAULT_USER=ms_admin
+      - RABBITMQ_DEFAULT_PASS=ms_admin
     ports:
       # AMQP protocol port
       - "5672:5672"
       # Management UI
       - "15672:15672"
+    networks:
+      - volumes_net
