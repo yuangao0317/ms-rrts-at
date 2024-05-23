@@ -1,5 +1,6 @@
 ﻿# ms-rrts-at  
 ### (In Development)  
+Client - Auth, Done.  
 Gateway Service - Auth, Done.  
 Notification Service - Auth, Done.  
 Auth Service - Done.  
