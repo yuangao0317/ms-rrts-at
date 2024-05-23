@@ -40,7 +40,7 @@ const ProtectedRoute: FC<IProtectedRouteProps> = ({ children }): ReactElement =>
     checkUser();
   }, [checkUser]);
 
-  if ((data && data.user) || authUser) {
+  if (data && data.user && authUser) {
     if (tokenIsValid) {
       return (
         <>
@@ -54,10 +54,10 @@ const ProtectedRoute: FC<IProtectedRouteProps> = ({ children }): ReactElement =>
         </>
       );
     } else {
-      return <></>;
+      return <>Token is invalid.</>;
     }
   } else {
-    return <>{<Navigate to="/" />}</>;
+    return <>{<Navigate to="/" replace />}</>;
   }
 };
 

@@ -66,6 +66,7 @@ const AppPage: FC = (): ReactElement => {
         <PageToastAlert />
         <HomeHeader showCategoryContainer={showCategoryContainer} />
         <Home />
+        {/* {<Navigate to="/home" />} */}
       </>
     );
   } else {

@@ -20,7 +20,7 @@ const AppRouter: FC = () => {
       element: <AppPage />
     },
     {
-      path: '/',
+      path: '/home',
       element: (
         <Suspense fallback={<div>Loading Home...</div>}>
           <ProtectedRoute>

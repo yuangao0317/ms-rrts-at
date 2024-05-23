@@ -60,7 +60,7 @@ export const applicationLogout = (dispatch: Dispatch, navigate: NavigateFunction
   // clear local session
   saveToSessionStorage(JSON.stringify(false), JSON.stringify(''));
 
-  // clear server cache???
+  // clear server cache like online offline status???
 
   navigate('/');
 };
