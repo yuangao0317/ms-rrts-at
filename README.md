@@ -1,9 +1,9 @@
 ﻿# ms-rrts-at  
 ### (In Development)  
-Gateway Service - Auth, Done.
-Notification Service - Auth, Done.
-Auth Service - Done.
-ElasticSearch(local) - Kibana, Done.
+Gateway Service - Auth, Done.  
+Notification Service - Auth, Done.  
+Auth Service - Done.  
+ElasticSearch(local) - Kibana, Done.  
 
 ## About  
 Containerized Microservices Application.  
