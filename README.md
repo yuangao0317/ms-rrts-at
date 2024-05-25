@@ -10,7 +10,12 @@ Containerized Microservices Application.
 | Notification Service - Auth  | Done |
 | Auth Service - Auth  | Done |
 | ElasticSearch(local) - Kibana  | Done |
-
+| ElasticSearch(local) - Metricbeat  | Implementing |
+| ElasticSearch(local) - heartbeat  | Implementing |
+| ElasticSearch(local) - APM  | Implementing |
+| Kubernetes Deployment - Minikube  | Implementing |
+| Jenkins CI/CD(local)  | Implementing |
+ 
 ### Tech Stack  
 React, NodeJS, Typescript, Kubernetes/Docker, Rabbitmq, Redis, MySQL, PostgreSQL, MongoDB, SocketIO, Minikube, AWS EKS, Tailwind, Express, RTK Query, Elastic Stack, Jenkins, Prometheus/Grafana, JWT Auth, OTP Auth, API Gateway, and more!  
 
