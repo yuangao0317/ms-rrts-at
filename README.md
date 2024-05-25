@@ -11,11 +11,13 @@ Containerized Microservices Application.
 | Auth Service - Auth  | Done |
 | ElasticSearch(local) - Kibana  | Done |
 | ElasticSearch(local) - Metricbeat  | Implementing |
-| ElasticSearch(local) - heartbeat  | Implementing |
+| ElasticSearch(local) - Heartbeat  | Implementing |
 | ElasticSearch(local) - APM  | Implementing |
 | Kubernetes Deployment - Minikube  | Implementing |
 | Jenkins CI/CD(local)  | Implementing |
 | Other - Microservices(chat service?)  |  |
+| Other - Client Features(chat feature?)  |  |
+| Kubernetes Deployment - AWS EKS Cluster  |  |  
  
 ### Tech Stack  
 React, NodeJS, Typescript, Kubernetes/Docker, Rabbitmq, Redis, MySQL, PostgreSQL, MongoDB, SocketIO, Minikube, AWS EKS, Tailwind, Express, RTK Query, Elastic Stack, Jenkins, Prometheus/Grafana, JWT Auth, OTP Auth, API Gateway, and more!  
