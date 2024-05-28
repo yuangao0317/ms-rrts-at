@@ -10,8 +10,8 @@ Containerized Microservices Application.
 | Notification Service - Auth  | Done |
 | Auth Service - Auth  | Done |
 | ElasticSearch(local) - Kibana  | Done |
-| ElasticSearch(local) - Metricbeat  | Implementing |
-| ElasticSearch(local) - Heartbeat  | Implementing |
+| ElasticSearch(local) - Metricbeat  | Done |
+| ElasticSearch(local) - Heartbeat  | Done |
 | ElasticSearch(local) - APM  | Implementing |
 | Kubernetes Deployment - Minikube  | Implementing |
 | Jenkins CI/CD(local)  | Implementing |
