@@ -33,6 +33,8 @@ React, NodeJS, Typescript, Kubernetes/Docker, Rabbitmq, Redis, MySQL, PostgreSQL
 ### Monitoring  
 ##### Metricbeat - Infrastructure  
 ![image](https://github.com/yuangao0317/ms-rrts-at/assets/12887619/f70de990-a229-4bb6-a750-162d71a8fb47)  
+![metricbeat](https://github.com/yuangao0317/ms-rrts-at/assets/12887619/1705a999-1b7a-4eec-8a37-1e7fe66c6f77)  
+
 
 
 ### How to setup project locally  
