@@ -15,6 +15,7 @@ Containerized Microservices Application.
 | ElasticSearch(local) - APM  | Implementing |
 | Kubernetes Deployment - Minikube  | Implementing |
 | Jenkins CI/CD(local)  | Implementing |
+| Finish landing page  |  |
 | Other - Microservices(chat service?)  |  |
 | Other - Client Features(chat feature?)  |  |
 | Kubernetes Deployment - AWS EKS Cluster  |  |  
