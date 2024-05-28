@@ -3,6 +3,7 @@ version: "3.9"
 networks:
   elastic_net:
   volumes_net:
+  services_net:
 
 
 services:
@@ -82,3 +83,20 @@ services:
     networks:
       - elastic_net
       - volumes_net
+
+  #https://www.elastic.co/guide/en/beats/heartbeat/current/running-on-docker.html
+  heartbeat:
+    container_name: heartbeat_container
+    image: docker.elastic.co/beats/heartbeat:8.13.2
+    user: root
+    hostname: heartbeat
+    cap_add:
+      - NET_RAW
+    command: [ "--strict.perms=false" ]
+    volumes:
+      - ./heartbeat.yml:/usr/share/heartbeat/heartbeat.yml:ro
+    depends_on:
+      - elasticsearch
+    networks:
+      - elastic_net
+      - services_net
