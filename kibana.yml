@@ -35,6 +35,15 @@ xpack.fleet.agentPolicies:
         id: default-apm
         package:
           name: apm
-
+        inputs:
+          - type: apm
+            enabled: true
+            vars:
+              - name: rum_enabled
+                value: true
+              - name: rum_allow_origins
+                value: "*"
+              - name: rum_allow_headers
+                value: "Authorization"
 ## Misc
 elasticsearch.requestTimeout: 90000

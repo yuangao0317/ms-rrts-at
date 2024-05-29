@@ -1,5 +1,9 @@
 apm-server:
   host: "apm_server_container:8200"
+  rum:
+    enabled: true
+    allow_origins: ["*"]
+    allow_headers: ["Authorization"]
 
 auth:
   secret_token: ""
