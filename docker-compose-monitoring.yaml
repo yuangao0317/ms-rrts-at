@@ -122,3 +122,4 @@ services:
     networks:
       - elastic_net
       - services_net
+      - volumes_net
