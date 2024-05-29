@@ -13,14 +13,15 @@ services:
       context: ./ms/p00-gateway-service
       dockerfile: Dockerfile.dev
     restart: always
-    env_file: ./ms/p00-gateway-service/.env.dev
+    env_file:
+      - ./ms/p00-gateway-service/.env.dev
     environment:
       # overwrite env_file
       - NODE_ENV=development
       - CLIENT_URL=http://localhost:3000
       - ELASTIC_SEARCH_URL=http://elastic:ms_admin@elasticsearch_container:9200
-      - REDIS_HOST=redis://localhost:6379
-      - AUTH_BASE_URL=http://localhost:4002
+      - REDIS_HOST=redis://redis_container:6379
+      - AUTH_BASE_URL=http://auth_container:4002
       - ENABLE_APM=1
       - ELASTIC_APM_SERVER_URL=http://apm_server_container:8200
       - ELASTIC_APM_SECRET_TOKEN=
@@ -39,7 +40,8 @@ services:
       context: ./ms/p01-notification-service
       dockerfile: Dockerfile.dev
     restart: always
-    env_file: ./ms/p01-notification-service/.env.dev
+    env_file:
+      - ./ms/p01-notification-service/.env.dev
     environment:
       - NODE_ENV=development
       - CLIENT_URL=http://localhost:3000
@@ -66,10 +68,11 @@ services:
       context: ./ms/p02-auth-service
       dockerfile: Dockerfile.dev
     restart: always
-    env_file: ./ms/p02-auth-service/.env.dev
+    env_file:
+      - ./ms/p02-auth-service/.env.dev
     environment:
       - NODE_ENV=development
-      - AP_GATEWAY_URL=http://localhost:4000
+      - AP_GATEWAY_URL=http://gateway_container:4000
       - RABBITMQ_ENDPOINT=amqp://ms_admin:ms_admin@rabbitmq_container:5672
       - MYSQL_DB=mysql://ms_admin:ms_admin@mysql_container:3306/ms_auth
       - ELASTIC_SEARCH_URL=http://elastic:ms_admin@elasticsearch_container:9200
