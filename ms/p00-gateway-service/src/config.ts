@@ -6,6 +6,7 @@ if (process.env.NODE_ENV === 'development') {
   dotenv.config({});
 }
 
+// https://www.elastic.co/guide/en/apm/agent/nodejs/current/set-up.html
 if (process.env.ENABLE_APM === '1') {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   require('elastic-apm-node').start({

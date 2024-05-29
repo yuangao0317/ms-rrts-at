@@ -1,4 +1,4 @@
-# docker compose -f docker-compose-monitoring.yaml up -d elasticsearch kibana
+# docker compose -f docker-compose-monitoring.yaml up -d elasticsearch kibana metricbeat heartbeat apm-server
 version: "3.9"
 networks:
   elastic_net:
@@ -97,6 +97,28 @@ services:
       - ./heartbeat.yml:/usr/share/heartbeat/heartbeat.yml:ro
     depends_on:
       - elasticsearch
+    networks:
+      - elastic_net
+      - services_net
+
+  #https://www.elastic.co/guide/en/apm/guide/7.17/apm-overview.html#apm-overview
+  apm-server:
+    image: docker.elastic.co/apm/apm-server:8.13.2
+    container_name: apm_server_container
+    ports:
+      - 8200:8200
+    volumes:
+      - ./apm-server.yml:/usr/share/apm-server/apm-server.yml:ro
+    command: >
+      apm-server -e
+        -E apm-server.rum.enabled=true
+        -E setup.kibana.host=kibana_container:5601
+        -E setup.template.settings.index.number_of_replicas=0
+        -E apm-server.kibana.enabled=true
+        -E apm-server.kibana.host=kibana_container:5601
+        -E apm-server.kibana.protocol=http
+        -E strict.perms=false
+        -E apm-server.auth.anonymous.enabled=true
     networks:
       - elastic_net
       - services_net
