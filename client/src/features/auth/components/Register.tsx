@@ -77,10 +77,10 @@ const RegisterModal: FC<IModalContainerProps> = ({ onClose, onToggle }): ReactEl
       }
     } catch (err) {
       console.log('err', err);
+      if (toastRef.current) {
+        toast.dismiss(toastRef.current);
+      }
       if (isApiResponseError(err)) {
-        if (toastRef.current) {
-          toast.dismiss(toastRef.current);
-        }
         toastRef.current = toast.error(handleCatchFetchError(err));
       } else {
         toastRef.current = toast.error(err.error);

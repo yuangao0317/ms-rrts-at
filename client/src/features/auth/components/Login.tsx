@@ -51,10 +51,10 @@ const LoginModal: FC<IModalContainerProps> = ({ onClose, onToggle, onTogglePassw
     } catch (err) {
       console.log('err', err);
       setAlertMessage('');
+      if (toastRef.current) {
+        toast.dismiss(toastRef.current);
+      }
       if (isApiResponseError(err)) {
-        if (toastRef.current) {
-          toast.dismiss(toastRef.current);
-        }
         toastRef.current = toast.error(handleCatchFetchError(err));
       } else {
         toastRef.current = toast.error(err.error);
