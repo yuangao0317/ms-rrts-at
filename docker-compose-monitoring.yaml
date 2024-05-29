@@ -67,6 +67,7 @@ services:
     container_name: metricbeat_container
     image: docker.elastic.co/beats/metricbeat:8.13.2
     user: root
+    hostname: metricbeat
     ports:
       - 5066:5066
     volumes:
