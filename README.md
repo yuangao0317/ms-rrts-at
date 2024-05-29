@@ -39,7 +39,8 @@ React, NodeJS, Typescript, Kubernetes/Docker, Rabbitmq, Redis, MySQL, PostgreSQL
 ##### Heartbeat - HTTP Health Endpoint
 ![image](https://github.com/yuangao0317/ms-rrts-at/assets/12887619/499fc4ab-5364-4e05-83b3-ea080ff6eafe)  
 
-
+##### APM - HTTP Transaction Tracing  
+![apm](https://github.com/yuangao0317/ms-rrts-at/assets/12887619/ccedf231-fdf6-43aa-a46a-05d759793505)  
 
 ### How to setup project locally  
 \ms-rrts-at> docker compose -f docker-compose-volumes.yaml -f docker-compose-monitoring.yaml -f docker-compose-services.yaml up -d  
