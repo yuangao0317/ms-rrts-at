@@ -19,6 +19,8 @@ Containerized Microservices Application.
 | Other - Microservices(chat service?)  |  |
 | Other - Client Features(chat feature?)  |  |
 | Kubernetes Deployment - AWS EKS Cluster  |  |  
+| Jenkins on AWS  |  |  
+| Prometheus/Grafana  |  |  
  
 ### Tech Stack  
 React, NodeJS, Typescript, Kubernetes/Docker, Rabbitmq, Redis, MySQL, PostgreSQL, MongoDB, SocketIO, Minikube, AWS EKS, Tailwind, Express, RTK Query, Elastic Stack, Jenkins, Prometheus/Grafana, JWT Auth, OTP Auth, API Gateway, and more!  
