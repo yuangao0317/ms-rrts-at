@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: ms-rrts-at-mongo
+  namespace: production
+spec:
+  selector:
+    matchLabels:
+      app: ms-rrts-at-mongo
+  serviceName: ms-rrts-at-mongo
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ms-rrts-at-mongo
+    spec:
+      containers:
+      - name: ms-rrts-at-mongo
+        image: mongo:latest
+        ports:
+        - containerPort: 27017
+          name: mongo-port
+        volumeMounts:
+        - name: mongo-local-storage
+          mountPath: /data/db
+      volumes:
+      - name: mongo-local-storage
+        persistentVolumeClaim:
+          claimName: mongo-pvc

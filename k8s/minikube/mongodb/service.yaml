@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-rrts-at-mongo
+  namespace: production
+spec:
+  type: ClusterIP
+  selector:
+    app: ms-rrts-at-mongo
+  ports:
+  - name: mongo-port
+    port: 27017
+    targetPort: 27017
