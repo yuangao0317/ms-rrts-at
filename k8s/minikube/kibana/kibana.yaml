@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-rrts-at-kibana
+  namespace: production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-rrts-at-kibana
+  template:
+    metadata:
+      labels:
+        app: ms-rrts-at-kibana
+    spec:
+      containers:
+        - name: ms-rrts-at-kibana
+          image: docker.elastic.co/kibana/kibana:8.13.2
+          resources:
+            limits:
+              memory: "1Gi"
+              cpu: "1500m"
+            requests:
+              cpu: 250m
+              memory: 1Gi
+          ports:
+          - name: kibana-port
+            containerPort: 5601
+          env:
+            - name: ELASTICSEARCH_HOSTS
+              # http://<service-name>.<namespace>.svc.cluster.local:<port-number>
+              value: http://ms-rrts-at-elastic.production.svc.cluster.local:9200
+            - name: ELASTICSEARCH_USERNAME
+              value: kibana_system
+            - name: ELASTICSEARCH_PASSWORD
+              # add to secret file
+              value: 'QVXa*WhthROrDh2Xy02J'
+            - name: ELASTICSEARCH_SERVICEACCOUNT_TOKEN
+              value: AAEAAWVsYXN0aWMva2liYW5hL21zLXJydHMtbXMta2liYW5hOmc1LUZYd21nVEp5RWxTWkluMlVoSHc

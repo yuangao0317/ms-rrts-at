@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-rrts-at-kibana
+  namespace: production
+spec:
+  type: ClusterIP
+  selector:
+    app: ms-rrts-at-kibana
+  ports:
+  - name: ms-rrts-at-kibana
+    port: 5601
+    targetPort: 5601
+    protocol: TCP
