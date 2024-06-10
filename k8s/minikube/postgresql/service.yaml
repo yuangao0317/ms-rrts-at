@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-rrts-at-postgres
+  namespace: production
+spec:
+  type: ClusterIP
+  selector:
+    app: ms-rrts-at-postgres
+  ports:
+  - name: ms-rrts-at-postgres
+    port: 5432
+    targetPort: 5432
