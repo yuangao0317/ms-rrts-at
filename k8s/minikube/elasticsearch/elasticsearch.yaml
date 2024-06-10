@@ -59,7 +59,10 @@ spec:
             - name: xpack.security.authc.token.enabled
               value: 'true'
             - name: ELASTIC_PASSWORD
-              value: 'ms_admin'
+              valueFrom:
+                secretKeyRef:
+                  name: ms-rrts-at-backend-secret
+                  key: elasticsearch-password
           ports:
           - name: elastic-port
             containerPort: 9200

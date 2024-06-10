@@ -19,13 +19,22 @@ spec:
         image: mysql:latest
         env:
         - name: MYSQL_ROOT_PASSWORD
-          value: ms_admin
+          valueFrom:
+            secretKeyRef:
+              name: ms-rrts-at-backend-secret
+              key: mysql-root-password
         - name: MYSQL_PASSWORD
-          value: ms_admin
+          valueFrom:
+            secretKeyRef:
+              name: ms-rrts-at-backend-secret
+              key: mysql-password
         - name: MYSQL_DATABASE
           value: ms_auth
         - name: MYSQL_USER
-          value: 'ms_admin'
+          valueFrom:
+            secretKeyRef:
+              name: ms-rrts-at-backend-secret
+              key: mysql-user
         resources:
           limits:
             memory: "1Gi"

@@ -18,9 +18,15 @@ spec:
         image: rabbitmq:3.13-rc-management-alpine
         env:
         - name: RABBITMQ_DEFAULT_USER
-          value: ms_admin
+          valueFrom:
+            secretKeyRef:
+              name: ms-rrts-at-backend-secret
+              key: rabbitmq-user
         - name: RABBITMQ_DEFAULT_PASS
-          value: ms_admin
+          valueFrom:
+            secretKeyRef:
+              name: ms-rrts-at-backend-secret
+              key: rabbitmq-password
         resources:
           limits:
             memory: "1Gi"
