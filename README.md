@@ -33,6 +33,9 @@ React, NodeJS, Typescript, Kubernetes/Docker, Rabbitmq, Redis, MySQL, PostgreSQL
 ### Authorization Service  
 <img src="https://github.com/yuangao0317/ms-rrts-at/assets/12887619/05cc7f33-0600-4fbb-83cb-00fd26d34b1e" width="900"/>  
 
+### K8s/Minikube  
+![image](https://github.com/yuangao0317/ms-rrts-at/assets/12887619/1ce9bca7-e59a-4974-a95f-a8c7fab51992)  
+
 ### Monitoring  
 ##### Metricbeat - Infrastructure  
 ![image](https://github.com/yuangao0317/ms-rrts-at/assets/12887619/f70de990-a229-4bb6-a750-162d71a8fb47)  
