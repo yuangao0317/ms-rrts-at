@@ -37,7 +37,7 @@ React, NodeJS, Typescript, Kubernetes/Docker, Rabbitmq, Redis, MySQL, PostgreSQL
 ![image](https://github.com/yuangao0317/ms-rrts-at/assets/12887619/1ce9bca7-e59a-4974-a95f-a8c7fab51992)  
 Deployed microservices' images for kubernetes  
 ![image](https://github.com/yuangao0317/ms-rrts-at/assets/12887619/83c4b12c-4b00-44b6-80b7-b8b8b751534d)  
-![image](https://github.com/yuangao0317/ms-rrts-at/assets/12887619/a44c7bbc-d1ff-41c1-bd7b-01f99c9f1efd)  
+![image](https://github.com/yuangao0317/ms-rrts-at/assets/12887619/a52ac51f-7fe6-4691-a7d1-888c14901432)  
 
 ### Monitoring  
 ##### Metricbeat - Infrastructure  
