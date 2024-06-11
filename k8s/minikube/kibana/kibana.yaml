@@ -29,7 +29,11 @@ spec:
           env:
             - name: ELASTICSEARCH_HOSTS
               # http://<service-name>.<namespace>.svc.cluster.local:<port-number>
-              value: http://ms-rrts-at-elastic.production.svc.cluster.local:9200
+              # value: http://ms-rrts-at-elastic.production.svc.cluster.local:9200
+              valueFrom:
+                secretKeyRef:
+                  name: ms-rrts-at-backend-secret
+                  key: elasticsearch-host
             - name: ELASTICSEARCH_USERNAME
               value: kibana_system
             - name: ELASTICSEARCH_PASSWORD
