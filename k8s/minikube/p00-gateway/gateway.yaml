@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-rrts-at-gateway
+  namespace: production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-rrts-at-gateway
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25% 
+      maxSurge: 25%
+  template:
+    metadata:
+      labels:
+        app: ms-rrts-at-gateway
+    spec:
+      containers:
+      - name: ms-rrts-at-gateway
+        image: gordonsdev/p00-gateway-service:stable
+        imagePullPolicy: Always
+        resources:
+          limits:
+            cpu: '0.5'
+            memory: 1Gi
+          requests:
+            cpu: 100m
+            memory: 150Mi
+        ports:
+        - name: gateway-port
+          containerPort: 4000
+        env:
+          - name: ENABLE_APM
+            value: '1'
+          - name: NODE_ENV
+            value: 'production'
+          - name: SECRET_KEY_ONE
+            valueFrom:
+              secretKeyRef:
+                name: ms-rrts-at-backend-secret
+                key: secret-key-one
+          - name: SECRET_KEY_TWO
+            valueFrom:
+              secretKeyRef:
+                name: ms-rrts-at-backend-secret
+                key: secret-key-two
+          - name: ENV_GATEWAY_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: ms-rrts-at-backend-secret
+                key: env-gateway-token
+          - name: JWT_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: ms-rrts-at-backend-secret
+                key: jwt-token
+          - name: CLIENT_URL
+            value: 'https://localhost:3000'
+          - name: AUTH_BASE_URL
+            valueFrom:
+              secretKeyRef:
+                name: ms-rrts-at-backend-secret
+                key: auth-base-url
+          - name: REDIS_HOST
+            valueFrom:
+              secretKeyRef:
+                name: ms-rrts-at-backend-secret
+                key: redis-host
+          - name: ELASTIC_SEARCH_URL
+            valueFrom:
+              secretKeyRef:
+                name: ms-rrts-at-backend-secret
+                key: elasticsearch-url
+          - name: ELASTIC_APM_SERVER_URL
+            valueFrom:
+              secretKeyRef:
+                name: ms-rrts-at-backend-secret
+                key:  elastic-apm-server-url
+          - name: ELASTIC_APM_SECRET_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: ms-rrts-at-backend-secret
+                key: elastic-apm-secret-token

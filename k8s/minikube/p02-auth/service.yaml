@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-rrts-at-auth
+  namespace: production
+spec:
+  type: ClusterIP
+  selector:
+    app: ms-rrts-at-auth
+  ports:
+  - name: auth
+    port: 4002
+    targetPort: 4002
+    protocol: TCP

@@ -1,0 +1,27 @@
+# https://kubernetes.io/docs/concepts/services-networking/ingress/
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ms-rrts-at-gateway-ingress
+  namespace: production
+  # going to use AWS LB to replace this nginx.ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  defaultBackend:
+    service:
+      name: ms-rrts-at-gateway
+      port: 
+        number: 4000
+  rules:
+  - host: freelanpo.com
+    http:
+      paths:
+      - path: /api/gateway/v1
+        pathType: Prefix
+        backend:
+          service:
+            name: ms-rrts-at-gateway
+            port: 
+              number: 4000

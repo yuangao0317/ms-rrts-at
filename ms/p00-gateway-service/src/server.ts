@@ -47,8 +47,12 @@ export class GatewayServer {
         name: 'session',
         keys: [`${config.SECRET_KEY_ONE}`, `${config.SECRET_KEY_TWO}`],
         maxAge: 24 * 7 * 3600000,
-        secure: config.NODE_ENV !== 'development'
-        // sameSite: 'none'
+        // if secure set to 'true', requests will be made via https, then we need self-signed/certificates
+        // https://stackoverflow.com/questions/7580508/getting-chrome-to-accept-self-signed-localhost-certificate/60516812#60516812
+        secure: config.NODE_ENV !== 'development',
+        ...(config.NODE_ENV !== 'development' && {
+          sameSite: 'none' // if secure set to 'true', requests will be made via https, then we need self-signed/certificates
+        })
       })
     );
     app.use(hpp());
