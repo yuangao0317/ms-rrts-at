@@ -51,7 +51,7 @@ export class GatewayServer {
         // https://stackoverflow.com/questions/7580508/getting-chrome-to-accept-self-signed-localhost-certificate/60516812#60516812
         secure: config.NODE_ENV !== 'development',
         ...(config.NODE_ENV !== 'development' && {
-          sameSite: 'none' // if secure set to 'true', requests will be made via https, then we need self-signed/certificates
+          sameSite: 'none' // for attaching session
         })
       })
     );
