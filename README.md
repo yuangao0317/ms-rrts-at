@@ -16,8 +16,10 @@ Containerized Microservices Application.
 | Kubernetes Deployment - Minikube  | Implementing |
 | Jenkins CI/CD(local)  | Implementing |
 | Finish landing page  |  |
-| Other - Microservices(chat service?)  |  |
-| Other - Client Features(chat feature?)  |  |
+| Microservices(AI Worker service)  |  |
+| Microservices(Worker Market service)  |  |
+| Client Features(AI Worker feature)  |  |
+| Client Features(Worker Market feature)  |  |
 | Kubernetes Deployment - AWS EKS Cluster  |  |  
 | Jenkins on AWS  |  |  
 | Prometheus/Grafana  |  |  
