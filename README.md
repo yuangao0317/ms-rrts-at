@@ -18,6 +18,8 @@ Containerized Microservices Application.
 | Finish landing page  |  |
 | Microservices(AI Worker service)  |  |
 | Microservices(Worker Market service)  |  |
+| Microservices(Order service)  |  |
+| Microservices(Review service)  |  |
 | Client Features(AI Worker feature)  |  |
 | Client Features(Worker Market feature)  |  |
 | Kubernetes Deployment - AWS EKS Cluster  |  |  
