@@ -13,7 +13,7 @@ export const sequelize: Sequelize = new Sequelize(config.MYSQL_DB!, {
     multipleStatements: true
   }
 });
-
+// https://dev.to/anonyma/how-to-retry-transactions-in-sequelize-5h5c
 /*
 retry: {
   match: [
