@@ -1,3 +1,5 @@
+// sequelize with typescript https://sequelize.org/docs/v6/other-topics/typescript/
+
 import { Logger } from 'winston';
 import { winstonLogger } from '@yuangao0317/ms-rrts-at-shared-common';
 import { config } from '@auth/config';
