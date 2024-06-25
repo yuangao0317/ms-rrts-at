@@ -14,6 +14,56 @@ export const sequelize: Sequelize = new Sequelize(config.MYSQL_DB!, {
   }
 });
 
+/*
+retry: {
+  match: [
+    /SequelizeConnectionError/,
+    /SequelizeConnectionRefusedError/,
+    /SequelizeHostNotFoundError/,
+    /SequelizeHostNotReachableError/,
+    /SequelizeInvalidConnectionError/,
+    /SequelizeConnectionTimedOutError/
+  ],
+  name: 'query',
+  backoffBase: 100,
+  backoffExponent: 1.1,
+  timeout: 60000,
+  max: Infinity
+}
+*/
+/*
+{
+  dialect: 'mysql',
+  dialectOptions: {
+    multipleStatements: true,
+    //this is to force mysql2 lib to coerce decimal numbers into actual numbers instead of strings https://github.com/sequelize/sequelize/issues/8019
+    decimalNumbers: true
+  },
+  replication: {
+    write: {
+      host: process.env.MYSQL_MASTER_HOST,
+      port: process.env.MYSQL_MASTER_PORT,
+      username: process.env.MYSQL_MASTER_USERNAME,
+      password: process.env.MYSQL_MASTER_PASSWORD
+    },
+    read: [{
+      host: process.env.MYSQL_SLAVE_HOST,
+      port: process.env.MYSQL_SLAVE_PORT,
+      username: process.env.MYSQL_SLAVE_USERNAME,
+      password: process.env.MYSQL_SLAVE_PASSWORD
+    }]
+  },
+  pool: {
+    max: process.env.MYSQL_MASTER_CONNECTION_LIMIT,
+    min: 1,
+    idle: 10000
+  },
+  define: {
+    timestamps: false
+  }
+}
+*/
+
 export async function databaseConnection(): Promise<void> {
   try {
     await sequelize.authenticate();
