@@ -95,6 +95,18 @@ UserModel.prototype.hashPassword = async function (password: string): Promise<st
   return hash(password, SALT_ROUND);
 };
 
+/*
+// https://sequelize.org/docs/v6/core-concepts/assocs/
+User.hasMany(Project, {
+  sourceKey: 'id',
+  foreignKey: 'ownerId',
+  as: 'projects' // this determines the name in `associations`!
+});
+
+Address.belongsTo(User, { targetKey: 'id' });
+User.hasOne(Address, { sourceKey: 'id' });
+*/
+
 // https://sequelize.org/docs/v6/core-concepts/model-basics/#model-synchronization
 UserModel.sync({});
 export { UserModel };
