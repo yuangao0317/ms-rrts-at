@@ -29,8 +29,6 @@ Containerized Microservices Application.
 ### Tech Stack  
 React, NodeJS, Typescript, Kubernetes/Docker, Rabbitmq, Redis, MySQL, PostgreSQL, MongoDB, SocketIO, Minikube, AWS EKS, Tailwind, Express, RTK Query, Elastic Stack, Jenkins, Prometheus/Grafana, JWT Auth, OTP Auth, API Gateway, and more!  
 
-### Architecture  
-
 ### API Gateway  
 <img src="https://github.com/yuangao0317/ms-rrts-at/assets/12887619/a9a5289b-d7a1-49ea-8e82-94f2505af70e" width="560"/>  
 
@@ -53,6 +51,15 @@ Deployed microservices' images for kubernetes
 
 ##### APM - HTTP Transaction Tracing  
 ![apm](https://github.com/yuangao0317/ms-rrts-at/assets/12887619/ccedf231-fdf6-43aa-a46a-05d759793505)  
+
+### Architecture  
+##### Example of Workers
+QA Testing Worker:  
+<img src="https://github.com/yuangao0317/ms-rrts-at/assets/12887619/0a571370-8e3a-46c0-ae93-1263bb46875f" width="720"/>   
+<br/> 
+Travel Management Worker:  
+<img src="https://github.com/yuangao0317/ms-rrts-at/assets/12887619/5d8b7c2f-32e3-4894-8d73-7df7f92e7572" width="520"/>    
+
 
 ### How to setup project locally  
 \ms-rrts-at> docker compose -f docker-compose-volumes.yaml -f docker-compose-monitoring.yaml -f docker-compose-services.yaml up -d  
