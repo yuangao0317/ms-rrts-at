@@ -15,6 +15,7 @@ Containerized Microservices Application.
 | ElasticSearch(local) - APM  | Done |
 | Kubernetes Deployment - Minikube  | Implementing |
 | Jenkins CI/CD(local)  | Implementing |
+| Change ORM to TypeORM  |  |
 | Finish landing page  |  |
 | Microservices(AI Worker service)  |  |
 | Microservices(Worker Market service)  |  |
